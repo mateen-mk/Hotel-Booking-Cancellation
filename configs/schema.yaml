@@ -1,0 +1,158 @@
+# Dataset Columns
+features:
+  hotel:
+    type: categorical
+    description: "Type of hotel (Resort Hotel or City Hotel)."
+  is_canceled:
+    type: boolean
+    description: "Reservation cancellation status (1: Canceled, 0: Not canceled)."
+  lead_time:
+    type: numerical
+    description: "Number of days between booking and check-in."
+  arrival_date_year:
+    type: numerical
+    description: "Year of arrival."
+  arrival_date_month:
+    type: categorical
+    description: "Month of arrival."
+  arrival_date_week_number:
+    type: numerical
+    description: "Week number of the year for arrival."
+  arrival_date_day_of_month:
+    type: numerical
+    description: "Day of the month of arrival."
+  stays_in_weekend_nights:
+    type: numerical
+    description: "Number of weekend nights (Saturday and Sunday) the guest stayed or booked."
+  stays_in_week_nights:
+    type: numerical
+    description: "Number of week nights the guest stayed or booked."
+  adults:
+    type: numerical
+    description: "Number of adults in the booking."
+  children:
+    type: numerical
+    description: "Number of children in the booking."
+  babies:
+    type: numerical
+    description: "Number of babies in the booking."
+  meal:
+    type: categorical
+    description: "Type of meal booked (BB, FB, HB, SC, Undefined)."
+  country:
+    type: categorical
+    description: "Country of origin of the guest."
+  market_segment:
+    type: categorical
+    description: "Market segment designation."
+  distribution_channel:
+    type: categorical
+    description: "Booking distribution channel."
+  is_repeated_guest:
+    type: boolean
+    description: "Indicates if the guest is a repeat customer (1: Yes, 0: No)."
+  previous_cancellations:
+    type: numerical
+    description: "Number of previous bookings canceled by the customer."
+  previous_bookings_not_canceled:
+    type: numerical
+    description: "Number of previous bookings not canceled by the customer."
+  reserved_room_type:
+    type: categorical
+    description: "Type of room reserved by the customer."
+  assigned_room_type:
+    type: categorical
+    description: "Type of room assigned to the customer."
+  booking_changes:
+    type: numerical
+    description: "Number of changes made to the booking."
+  deposit_type:
+    type: categorical
+    description: "Type of deposit made (No Deposit, Refundable, Non Refund)."
+  agent:
+    type: numerical
+    description: "ID of the travel agent responsible for the booking."
+  company:
+    type: numerical
+    description: "ID of the company responsible for the booking."
+  days_in_waiting_list:
+    type: numerical
+    description: "Number of days the booking was in the waiting list."
+  customer_type:
+    type: categorical
+    description: "Type of customer (Transient, Contract, Transient-Party, Group)."
+  adr:
+    type: numerical
+    description: "Average Daily Rate (ADR)."
+  required_car_parking_spaces:
+    type: numerical
+    description: "Number of car parking spaces required."
+  total_of_special_requests:
+    type: numerical
+    description: "Number of special requests made by the customer."
+  reservation_status:
+    type: categorical
+    description: "Last reservation status (Check-Out, Canceled, No-Show)."
+  reservation_status_date:
+    type: datetime
+    description: "Date of the last reservation status."
+  name:
+    type: sensitive
+    description: "Guest's name (sensitive information)."
+  email:
+    type: sensitive
+    description: "Guest's email address (sensitive information)."
+  phone-number:
+    type: sensitive
+    description: "Guest's phone number (sensitive information)."
+  credit_card:
+    type: sensitive
+    description: "Last four digits of the guest's credit card (sensitive information)."
+
+# Sensitive Columns to Remove at the time of Ingestion
+sensitive_columns:
+  - name
+  - email
+  - phone-number
+  - credit_card
+
+# Drop Columns (to prevent data leakage)
+drop_columns:
+  - reservation_status
+  - reservation_status_date
+  - assigned_room_type
+  - arrival_date_year
+  - country
+  - agent
+  - company
+
+# Data Cleaning
+missing_values_columns:
+  - children
+
+noisy_values_columns:
+  - adr
+  - adults
+  - children
+  - babies
+
+# Data Transformation
+transformation:
+  label_encoding:
+    - arrival_date_month
+
+  onehot_encoding:
+    - hotel
+    - meal
+    - market_segment
+    - distribution_channel
+    - reserved_room_type
+    - deposit_type
+    - customer_type
+
+  scaling:
+    - lead_time
+    - arrival_date_week_number
+    - arrival_date_day_of_month
+    - days_in_waiting_list
+    - adr
