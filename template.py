@@ -50,7 +50,6 @@ list_of_files = [
     "docs/setup.md",
     
     "requirements.txt",
-    "Makefile",
 ]
 
 # Create directories and files
