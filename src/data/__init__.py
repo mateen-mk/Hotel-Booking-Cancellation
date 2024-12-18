@@ -1,0 +1,1 @@
+# src/data folder is used for data related scripts such as: Data Ingestion, Data Cleaning, Data Preprocessing, etc.
