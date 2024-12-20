@@ -5,50 +5,49 @@ list_of_files = [
     "data/raw/.gitkeep",
     "data/interim/.gitkeep",
     "data/processed/.gitkeep",
-    "data/external/.gitkeep",
-    "data/features/.gitkeep",
 
+    "src/configuration/__init__.py",
     "src/data/__init__.py",
-    "src/features/__init__.py",
     "src/models/__init__.py",
     "src/pipelines/__init__.py",
     "src/predict/__init__.py",
-    "src/evaluation/__init__.py",
-    "src/utils/__init__.py",
-    "src/utils/helpers.py",
-    "src/constants/__init__.py",
-    "src/entities/__init__.py",
-    "src/entities/config_entity.py",
-    "src/entities/artifact_entity.py",
-    "src/initializers/__init__.py",
-    "src/initializers/initializers.py",
     "src/visualization/__init__.py",
     "src/visualization/plot_creator.py",
-    
-    "trained_models/.gitkeep",
-    
-    "configs/schema.yaml",
-    
-    "tests/unit/__init__.py",
-    "tests/integration/__init__.py",
-    "tests/e2e/__init__.py",
-    
-    "deploy/api/__init__.py",
-    "deploy/docker/Dockerfile",
-    "deploy/cloud/__init__.py",
-    
-    "reports/figures/.gitkeep",
-    "reports/tables/.gitkeep",
+    "src/mlops/__init__.py",
+
+    "src/core/constants/__init__.py",
+    "src/core/entities/__init__.py",
+    "src/core/entities/artifact_entity.py",
+    "src/core/entities/config_entity.py",
+    "src/core/utils/__init__.py",
+    "src/core/utils/helpers.py"
+    "src/core/logger/__init__.py",
+    "src/core/exception/__init__.py",
     
     "notebooks/trails.ipynb",
-    
-    "logs/pipeline_logs/.gitkeep",
-    "logs/app_logs/.gitkeep",
+
+    "configs/schema.yaml",
     
     "docs/architecture.md",
     "docs/api.md",
     "docs/setup.md",
     
+    "trained_models/.gitkeep",
+    
+    "tests/unit/__init__.py",
+    "tests/integration/__init__.py",
+    "tests/e2e/__init__.py",
+    
+    "deployment/api/__init__.py",
+    "deployment/docker",
+    "deployment/cloud/__init__.py",
+    
+    "reports/figures/.gitkeep",
+    "reports/tables/.gitkeep",
+        
+    "logs/pipeline_logs/.gitkeep",
+    "logs/app_logs/.gitkeep",
+
     "requirements.txt",
 ]
 
