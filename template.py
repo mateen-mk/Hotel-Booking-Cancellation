@@ -20,7 +20,7 @@ list_of_files = [
     "src/core/entities/artifact_entity.py",
     "src/core/entities/config_entity.py",
     "src/core/utils/__init__.py",
-    "src/core/utils/helpers.py"
+    "src/core/utils/helpers.py",
     "src/core/logger/__init__.py",
     "src/core/exception/__init__.py",
     

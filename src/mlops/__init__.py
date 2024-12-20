@@ -1,0 +1,1 @@
+# src/mlops folder will contains scripts related to MLops tools (e.g. MLFlow, DVC)

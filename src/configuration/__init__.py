@@ -1,0 +1,1 @@
+# src/configuration folder will contain Connection scripts to tools which we are using in the project (e.g. MySQL, AWS)
