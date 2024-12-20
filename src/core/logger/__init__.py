@@ -10,12 +10,16 @@ def get_logger(log_category: str):
     :param log_category: Category of the log (e.g., 'data', 'model', 'core').
     :return: Configured logger object.
     """
+    from_root_path = from_root()
+    print(f"Root directory resolved to: {from_root_path}")  # Debug statement
+
     # Timestamp for log file
     LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
     
     # Directory structure based on category
     log_dir = os.path.join("logs", f"{log_category}_logs")
-    logs_path = os.path.join(from_root(), log_dir, LOG_FILE)
+    logs_path = os.path.join(from_root_path, log_dir, LOG_FILE)
+    print(f"Log file will be written to: {logs_path}")  # Debug statement
 
     # Ensure directory exists
     os.makedirs(log_dir, exist_ok=True)

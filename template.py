@@ -49,6 +49,7 @@ list_of_files = [
     "logs/app_logs/.gitkeep",
 
     "requirements.txt",
+    "setup.py",
 ]
 
 # Create directories and files
