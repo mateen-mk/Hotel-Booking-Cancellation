@@ -32,14 +32,14 @@ list_of_files = [
     "docs/api.md",
     "docs/setup.md",
     
-    "trained_models/.gitkeep",
+    "models/.gitkeep",
     
     "tests/unit/__init__.py",
     "tests/integration/__init__.py",
     "tests/e2e/__init__.py",
     
     "deployment/api/__init__.py",
-    "deployment/docker",
+    "deployment/docker/.gitkeep",
     "deployment/cloud/__init__.py",
     
     "reports/figures/.gitkeep",
