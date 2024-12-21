@@ -1,3 +1,6 @@
+include .env
+
+
 # Define the virtual environment directory
 VENV_DIR = .hotelbookingenv
 
@@ -14,6 +17,7 @@ create-venv:
 install-requirements: $(VENV_DIR)
 	pip install -r requirements.txt
 	@echo "Requirements have been installed."
+
 
 # Update requirements.txt with current environment packages
 .PHONY: update-requirements
