@@ -2,10 +2,14 @@
 
 import os
 import sys
+
 import yaml
 
+from src.core.logger import get_logger
 from src.core.exception import HotelBookingException
 
+
+logger = get_logger('yaml_utils')
 
 @staticmethod
 def read_yaml_file(file_path: str) -> dict:
@@ -22,7 +26,9 @@ def read_yaml_file(file_path: str) -> dict:
     USvisaException: If an error occurs while reading the YAML file.
     """
     try:
+        logger.info(f"Reading Yaml from {file_path}")
         with open(file_path, "rb") as yaml_file:
+            logger.info(f"Successfully Read Yaml from {file_path}")
             return yaml.safe_load(yaml_file)
 
     except Exception as e:
@@ -47,7 +53,9 @@ def write_yaml_file(file_path: str, content: object, replace: bool = False) -> N
             if os.path.exists(file_path):
                 os.remove(file_path)
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        logger.info(f"Writing Yaml to {file_path}")
         with open(file_path, "w") as file:
+            logger.info(f"Successfully wrote Yaml to {file_path}")
             yaml.dump(content, file)
     except Exception as e:
         raise HotelBookingException(e, sys) from e
