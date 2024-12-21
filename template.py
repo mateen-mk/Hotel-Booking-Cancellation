@@ -8,7 +8,7 @@ list_of_files = [
 
     "src/configuration/__init__.py",
     "src/data/__init__.py",
-    "src/models/__init__.py",
+    "src/model/__init__.py",
     "src/pipelines/__init__.py",
     "src/predict/__init__.py",
     "src/visualization/__init__.py",
@@ -45,8 +45,7 @@ list_of_files = [
     "reports/figures/.gitkeep",
     "reports/tables/.gitkeep",
         
-    "logs/pipeline_logs/.gitkeep",
-    "logs/app_logs/.gitkeep",
+    "logs/.gitkeep",
 
     "requirements.txt",
     "setup.py",

@@ -1,9 +1,14 @@
 # logger script 
-import logging
+
 import os
+import logging
+
 from from_root import from_root
 from datetime import datetime
 
+from src.core.constants import LOGS_DIR
+
+# Function to create logger with a specified category and log file
 def get_logger(log_category: str):
     """
     Returns a logger for a specific category.
@@ -17,7 +22,7 @@ def get_logger(log_category: str):
     LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
     
     # Directory structure based on category
-    log_dir = os.path.join("logs", f"{log_category}_logs")
+    log_dir = os.path.join(LOGS_DIR, f"{log_category}_logs")
     logs_path = os.path.join(from_root_path, log_dir, LOG_FILE)
     print(f"Log file will be written to: {logs_path}")  # Debug statement
 

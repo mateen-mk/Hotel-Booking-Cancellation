@@ -11,6 +11,7 @@ from src.core.exception import HotelBookingException
 
 logger = get_logger('yaml_utils')
 
+# Function for Reading Yaml file from provided path
 @staticmethod
 def read_yaml_file(file_path: str) -> dict:
     """
@@ -35,6 +36,7 @@ def read_yaml_file(file_path: str) -> dict:
         raise HotelBookingException(e, sys) from e
     
 
+# Function to write Yaml file to provided path
 @staticmethod
 def write_yaml_file(file_path: str, content: object, replace: bool = False) -> None:
     """
