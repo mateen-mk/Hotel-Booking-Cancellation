@@ -29,7 +29,7 @@ class MySQLConnect:
             logger = get_logger('mysql')
             
             logger.info('Fetching MySQL Engine URL')
-            mysql_engine_url = os.getenv(MYSQL_ENGINE_URL)
+            mysql_engine_url = MYSQL_ENGINE_URL
             logger.info('Fetched MySQL Engine URL')
             if not mysql_engine_url:
                 raise Exception("Environment variable 'MYSQL_ENGINE_URL' is not set.")

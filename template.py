@@ -26,7 +26,7 @@ list_of_files = [
     
     "notebooks/trails.ipynb",
 
-    "configs/schema.yaml",
+    "settings/schema.yaml",
     
     "docs/architecture.md",
     "docs/api.md",
@@ -63,3 +63,13 @@ for filepath in list_of_files:
         if not os.path.exists(filepath):
             with open(filepath, "w") as f:
                 pass
+
+
+
+
+
+"""
+i am thinking of creating new folder called artifacts 
+in which data(raw/preprocessed), reports(data validation, performance metrics) 
+and models(preprocessor.pkl, model.pkl) folder would be their as subfolders
+"""
