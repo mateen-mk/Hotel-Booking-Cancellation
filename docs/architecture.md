@@ -71,32 +71,40 @@ Model Training --> Experiment Tracking --> Model Evaluation --> Model Deployment
 <summary>🔍 Click to expand the folder structure</summary>
 
 ```plaintext
-├── data
-│   ├── raw              # Raw data from MySQL
-│   ├── interim          # Intermediate processed data
-│   ├── processed        # Final preprocessed data
-│   ├── external         # External data sources
-│   ├── features         # Feature engineering output
-├── src
-│   ├── data             # Scripts for data ingestion and validation
-│   ├── features         # Scripts for data transformation and feature engineering
-│   ├── models           # Scripts for model training and evaluation
-│   ├── pipelines        # End-to-end pipeline orchestration
-│   ├── predict          # Scripts for making predictions
-│   ├── evaluation       # Model evaluation scripts
-│   ├── utils            # Helper functions and utilities
-│   ├── visualization    # Scripts for creating plots
-├── deploy
-│   ├── api              # Flask API for prediction
-│   ├── docker           # Dockerfiles for containerization
-│   ├── cloud            # Deployment scripts for AWS
-├── configs              # YAML configuration files
-├── notebooks            # Jupyter notebooks for experimentation
-├── tests                # Unit, integration, and e2e tests
-├── trained_models       # Serialized models (managed by DVC)
-├── reports              # Figures and tables for reporting
-├── logs                 # Logs for pipelines and app
-├── docs                 # Documentation (architecture, setup, API)
+Hotel-Booking-Cancellation/
+├── docs/                      # Documentation files for the project
+│   ├── architecture.md        # High-level architecture of the project
+│   ├── README.md              # Introduction, setup instructions, and usage information
+│   ├── setup.md               # Instructions to set up the project locally or on a server
+│   └── workflow.md            # Detailed project workflow explanation
+├── notebooks/                 # Jupyter notebooks for exploratory analysis and prototyping
+│   ├── figures/               # Images and plots generated during analysis
+│   └── trails.ipynb           # Miscellaneous experiments or trial code
+├── settings/                  # Configuration files
+│   └── schema.yaml            # Schema definitions for validating dataset structure
+├── src/                       # Source code for the project
+│   ├── configs/               # Configuration-related utilities (e.g. database/cloud connection scripts)
+│   ├── core/                  # Core components like utilities, exceptions, and logging
+│   │   ├── constants/         # Centralized constants for the project
+│   │   ├── entities/          # Entity definitions for structured data (e.g., config or artifacts)
+│   │   ├── exception/         # Custom exception classes
+│   │   ├── logger/            # Logging configuration and utilities
+│   │   ├── utils/             # Helper functions and utilities
+│   ├── data/                  # Data Related scripts
+│   ├── mlops/                 # Scripts for ML operations like training or monitoring
+│   ├── model/                 # Model Related scripts
+│   ├── pipelines/             # Orchestrates the data pipeline steps
+├── tests/                     # Testing suite for the project
+│   ├── e2e/                   # End-to-end tests for the complete pipeline
+│   ├── integration/           # Integration tests for individual modules
+│   ├── unit/                  # Unit tests for isolated components
+├── .env                       # Environment variables (e.g., API keys or credentials)
+├── .gitignore                 # Specifies files and folders to exclude from Git
+├── LICENSE                    # Project's licensing details
+├── Makefile                   # Automation tasks for building, testing, etc.
+├── requirements.txt           # Python dependencies for the project
+├── setup.py                   # Installation script for the project as a package
+└── structure.py               # Script to generate or validate the folder structure
 ```
 </details>
 

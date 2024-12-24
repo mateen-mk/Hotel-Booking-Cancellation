@@ -28,9 +28,10 @@ list_of_files = [
 
     "settings/schema.yaml",
     
-    "docs/architecture.md",
     "docs/api.md",
     "docs/setup.md",
+    "docs/workflow.md",
+    # "docs/architecture.md",
     
     "tests/unit/__init__.py",
     "tests/integration/__init__.py",
