@@ -2,17 +2,16 @@ import os
 from pathlib import Path
 
 list_of_files = [
-    "data/raw/.gitkeep",
-    "data/interim/.gitkeep",
-    "data/processed/.gitkeep",
+    # "artifacts/data/raw",
+    # "artifacts/data/processed",
+    # "artifacts/models",
+    # "artifacts/reports/data",
+    # "artifacts/reports/model",
 
-    "src/configuration/__init__.py",
+    "src/configs/__init__.py",
     "src/data/__init__.py",
     "src/model/__init__.py",
     "src/pipelines/__init__.py",
-    "src/predict/__init__.py",
-    "src/visualization/__init__.py",
-    "src/visualization/plot_creator.py",
     "src/mlops/__init__.py",
 
     "src/core/constants/__init__.py",
@@ -25,6 +24,7 @@ list_of_files = [
     "src/core/exception/__init__.py",
     
     "notebooks/trails.ipynb",
+    "notebooks/figures",
 
     "settings/schema.yaml",
     
@@ -32,20 +32,15 @@ list_of_files = [
     "docs/api.md",
     "docs/setup.md",
     
-    "models/.gitkeep",
-    
     "tests/unit/__init__.py",
     "tests/integration/__init__.py",
     "tests/e2e/__init__.py",
     
-    "deployment/api/__init__.py",
-    "deployment/docker/.gitkeep",
-    "deployment/cloud/__init__.py",
-    
-    "reports/figures/.gitkeep",
-    "reports/tables/.gitkeep",
+    # "deployment/api/__init__.py",
+    # "deployment/docker",
+    # "deployment/cloud/__init__.py",
         
-    "logs/.gitkeep",
+    "logs",
 
     "requirements.txt",
     "setup.py",
@@ -63,13 +58,3 @@ for filepath in list_of_files:
         if not os.path.exists(filepath):
             with open(filepath, "w") as f:
                 pass
-
-
-
-
-
-"""
-i am thinking of creating new folder called artifacts 
-in which data(raw/preprocessed), reports(data validation, performance metrics) 
-and models(preprocessor.pkl, model.pkl) folder would be their as subfolders
-"""
