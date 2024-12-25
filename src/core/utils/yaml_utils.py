@@ -24,7 +24,7 @@ def read_yaml_file(file_path: str) -> dict:
     dict: The content of the YAML file as a dictionary.
 
     Raises:
-    USvisaException: If an error occurs while reading the YAML file.
+    HotelBookingException: If an error occurs while reading the YAML file.
     """
     try:
         logger.info(f"Reading Yaml from {file_path}")
@@ -48,7 +48,7 @@ def write_yaml_file(file_path: str, content: object, replace: bool = False) -> N
     replace (bool, optional): If True, overwrite the file if it already exists. Defaults to False.
     
     Raises:
-    USvisaException: If an error occurs while writing the YAML file.
+    HotelBookingException: If an error occurs while writing the YAML file.
     """
     try:
         if replace:
