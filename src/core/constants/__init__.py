@@ -22,10 +22,13 @@ RAW_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'raw')
 INTERIM_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'interim')
 PROCESSED_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'processed')
 
+# Logger constants (logger names)
+DATA_LOGGER = 'data'
+MODEL_LOGGER = 'model'
+
 # Common Constants
-SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
+SCHEMA_FILE_PATH = os.path.join("settings", "schema.yaml")
 
 # Data Ingestion constants
 DATA_INGESTION_RAW_FILE = 'raw.csv'
 DATA_INGESTION_DATA_FILE = 'data.csv'
-DATA_INGESTION_LOGGER = 'Data_Ingestion'
