@@ -15,12 +15,7 @@ DATASET_NAME = 'hotel_booking'
 
 # Directory constants
 ARTIFACTS_DIR = 'artifacts'
-
-# Data Directory constants
 DATA_DIR = 'data'
-RAW_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'raw')
-INTERIM_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'interim')
-PROCESSED_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'processed')
 
 # Logger constants (logger names)
 DATA_LOGGER = 'data'
@@ -30,5 +25,10 @@ MODEL_LOGGER = 'model'
 SCHEMA_FILE_PATH = os.path.join("settings", "schema.yaml")
 
 # Data Ingestion constants
+RAW_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'raw')
 DATA_INGESTION_RAW_FILE = 'raw.csv'
 DATA_INGESTION_DATA_FILE = 'data.csv'
+
+# Data Validation constants
+VALIDATION_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'validation')
+DATA_VALIDATION_REPORT = 'drift_report.yaml'
