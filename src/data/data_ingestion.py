@@ -31,8 +31,8 @@ class DataIngestion:
         """
         try:
             self.logger = get_logger(DATA_LOGGER)
-            self.logger.info("_"*100)
-            self.logger.info("\n| | Started Data Ingestion Stage:")
+            self.logger.info("")
+            self.logger.info("- - - Started Data Ingestion Stage: - - -")
             self.logger.info("- "*50)
 
             self.dataset_name = DATASET_NAME
