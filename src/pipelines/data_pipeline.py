@@ -34,14 +34,17 @@ class DataPipeline:
         This method of DataPipeline class is responsible for starting data ingestion component
         """
         try:
-            self.logger.info("\n\n$ Entered start_data_ingestion method of DataPipeline Class:")
+            self.logger.info("_"*100)
+            self.logger.info("")
+            self.logger.info("! ! ! Entered start_data_ingestion method of DataPipeline Class:")
             
             data_ingestion = DataIngestion(data_ingestion_config=self.data_ingestion_config)
             data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
             self.logger.info("- "*50)
             self.logger.info("- - - Data Ingested Successfully! - - -")
 
-            self.logger.info("\n! ! ! Exited the start_data_ingestion method of DataPipeline class:")
+            self.logger.info("")
+            self.logger.info("! ! ! Exited the start_data_ingestion method of DataPipeline class:")
             self.logger.info("_"*100)
 
             return data_ingestion_artifact
@@ -57,13 +60,16 @@ class DataPipeline:
         This method of DataPipeline class is responsible for running the entire data pipeline
         """
         try:
-            self.logger.info("\n\n$ Entered run_data_pipeline method of DataPipeline Class:")
+            self.logger.info("_"*100)
+            self.logger.info("")
+            self.logger.info("$ Entered run_data_pipeline method of DataPipeline Class:")
             
             data_ingestion_artifact = self.start_data_ingestion()
             
             # Further processing and data analysis can be added here
             
-            self.logger.info("\n! ! ! Exited the run_data_pipeline method of DataPipeline class:")
+            self.logger.info("")
+            self.logger.info("$ Exited the run_data_pipeline method of DataPipeline class:")
             self.logger.info("_"*100)
         
         except Exception as e:
