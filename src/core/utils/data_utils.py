@@ -8,6 +8,7 @@ import pandas as pd
 from src.core.exception import HotelBookingException
 
 
+
 # Function for Reading data from a file
 @staticmethod
 def read_data(file_path: str) -> pd.DataFrame:
@@ -30,7 +31,6 @@ def read_data(file_path: str) -> pd.DataFrame:
     
     except Exception as e:
         raise HotelBookingException(f"Error reading data from {file_path}: {str(e)}", sys) from e
-
 
 
 # Function for saving data to a file
