@@ -34,3 +34,6 @@ DATA_INGESTION_DATA_FILE = 'data.csv'
 # Data Validation constants
 VALIDATION_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, REPORTS_DIR, 'validation')
 DATA_VALIDATION_REPORT = 'drift_report.yaml'
+
+# Data Preprocessing constants
+PROCESSED_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'processed')
