@@ -1,4 +1,5 @@
 # this script is used to run the pipelines from src/pipeline/*
+
 import sys
 
 from src.core.exception import HotelBookingException
