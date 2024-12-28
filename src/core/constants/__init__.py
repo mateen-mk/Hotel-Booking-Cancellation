@@ -22,10 +22,6 @@ ARTIFACTS_DIR = 'artifacts'
 DATA_DIR = 'data'
 REPORTS_DIR = 'reports'
 
-# Logger constants (logger names)
-DATA_LOGGER = 'data'
-MODEL_LOGGER = 'model'
-
 # Data Ingestion constants
 RAW_DATA_DIR = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, 'raw')
 DATA_INGESTION_RAW_FILE = 'raw.csv'
