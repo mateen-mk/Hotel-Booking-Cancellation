@@ -1,13 +1,12 @@
 # MySQL database connection script
-import os
 import sys
 
 import pandas as pd
 from typing import Optional
 from sqlalchemy import create_engine
 
-from src.core.logger import get_logger
 from src.core.exception import HotelBookingException
+
 from src.core.constants import (MYSQL_ENGINE_URL,
                                 DATABASE_NAME)
 
@@ -26,11 +25,8 @@ class MySQLConnect:
     def __init__(self) -> None:
         try:
             # Get SQLAlchemy engine URL from environment variable
-            logger = get_logger('mysql')
             
-            logger.info('Fetching MySQL Engine URL')
             mysql_engine_url = MYSQL_ENGINE_URL
-            logger.info('Fetched MySQL Engine URL')
             if not mysql_engine_url:
                 raise Exception("Environment variable 'MYSQL_ENGINE_URL' is not set.")
             
@@ -39,7 +35,6 @@ class MySQLConnect:
                 MySQLConnect.engine = create_engine(mysql_engine_url)
             
             self.engine = MySQLConnect.engine
-            logger.info("MySQL connection successful")
         
         except HotelBookingException as e:
             raise HotelBookingException(f"MySQL connection error: {e}", sys)
@@ -60,7 +55,6 @@ class HotelBookingData:
         Initializes the MySQL client connection.
         """
         try:
-            self.logger = get_logger('mysql')
             self.mysql_connect = MySQLConnect()
         except Exception as e:
             raise HotelBookingException(e, sys)
@@ -78,15 +72,11 @@ class HotelBookingData:
             database_name = database_name or DATABASE_NAME
             
             # Construct the SQL query
-            self.logger.info(f"Constructing the SQL query for dataset '{dataset_name}' in database '{database_name}'")
             query = f"SELECT * FROM {database_name}.{dataset_name}"
-            self.logger.info(f"Constructed SQL query : {query}")
 
             # Fetch data using SQLAlchemy
-            self.logger.info(f'Fetching dataset {dataset_name} from database {database_name}')
             with self.mysql_connect.engine.connect() as connection:
                 df = pd.read_sql(query, connection)
-            self.logger.info(f'Fetched dataset {dataset_name}')
 
             # Replace placeholder values (e.g., "na") with NaN
             df.replace({"na": pd.NA}, inplace=True)
