@@ -6,7 +6,7 @@ from pandas import DataFrame
 from evidently.model_profile import Profile
 from evidently.model_profile.sections import DataDriftProfileSection
 
-from src.core.logger import get_logger
+from core.logger.data_logger import logging
 from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import DataValidationConfig
@@ -19,8 +19,7 @@ from src.core.utils.yaml_utils import (read_yaml,
                                        write_yaml)
 
 
-from src.core.constants import (DATA_LOGGER, 
-                                SCHEMA_FILE_PATH,
+from src.core.constants import (SCHEMA_FILE_PATH,
                                 DATA_VALIDATION_SPLIT_RATIO)
 
 
@@ -33,17 +32,16 @@ class DataValidation:
         :param data_validation_config: configuration for data validation
         """
         try:
-            self.logger = get_logger(DATA_LOGGER)
-            self.logger.info("")
-            self.logger.info("- - - Started Data Validation Stage: - - -")
-            self.logger.info("- "*50)
+            logging.info("")
+            logging.info("- - - Started Data Validation Stage: - - -")
+            logging.info("- "*50)
 
             self.data_ingestion_artifact = data_ingestion_artifact
             self.data_validation_config = data_validation_config
             self._schema_config = read_yaml(file_path=SCHEMA_FILE_PATH)
         
         except Exception as e:
-            self.logger.error(f"Error in DataValidation initialization: {str(e)}")
+            logging.error(f"Error in DataValidation initialization: {str(e)}")
             raise HotelBookingException(f"Error during DataValidation initialization: {str(e)}", sys) from e
 
 
@@ -74,18 +72,18 @@ class DataValidation:
 
             # Logging the validation result and details
             if status:
-                self.logger.info("All required columns are present (excluding sensitive columns).")
+                logging.info("All required columns are present (excluding sensitive columns).")
             
             else:
-                self.logger.error(f"Missing required columns: {missing_columns}")
-                self.logger.info(f"Columns in DataFrame: {list(dataframe.columns)}")
-                self.logger.info(f"Expected required columns: {required_columns}")
+                logging.error(f"Missing required columns: {missing_columns}")
+                logging.info(f"Columns in DataFrame: {list(dataframe.columns)}")
+                logging.info(f"Expected required columns: {required_columns}")
             
             
             return status
         
         except Exception as e:
-            self.logger.error(f"Error in validate_number_of_columns: {str(e)}")
+            logging.error(f"Error in validate_number_of_columns: {str(e)}")
             raise HotelBookingException(f"Error in validate_number_of_columns: {str(e)}", sys) from e
 
 
@@ -110,7 +108,7 @@ class DataValidation:
 
             
             if len(missing_numerical_columns)>0:
-                self.logger.info(f"Missing numerical column: {missing_numerical_columns}")
+                logging.info(f"Missing numerical column: {missing_numerical_columns}")
 
 
             for column in self._schema_config.get("categorical_columns", []):
@@ -119,13 +117,13 @@ class DataValidation:
 
 
             if len(missing_categorical_columns)>0:
-                self.logger.info(f"Missing categorical column: {missing_categorical_columns}")
+                logging.info(f"Missing categorical column: {missing_categorical_columns}")
 
 
             return False if len(missing_categorical_columns)>0 or len(missing_numerical_columns)>0 else True
 
         except Exception as e:
-            self.logger.error(f"Error in is_column_exist: {str(e)}")
+            logging.error(f"Error in is_column_exist: {str(e)}")
             raise HotelBookingException(f"Error in is_column_exist: {str(e)}", sys) from e        
 
 
@@ -154,13 +152,13 @@ class DataValidation:
             n_drifted_features = json_report["data_drift"]["data"]["metrics"]["n_drifted_features"]
 
 
-            self.logger.info(f"{n_drifted_features}/{n_features} drift detected.")
+            logging.info(f"{n_drifted_features}/{n_features} drift detected.")
             drift_status = json_report["data_drift"]["data"]["metrics"]["dataset_drift"]
 
             return drift_status
 
         except Exception as e:
-            self.logger.error(f"Error in detect_data_drift: {str(e)}")
+            logging.error(f"Error in detect_data_drift: {str(e)}")
             raise HotelBookingException(f"Error in detect_data_drift: {str(e)}", sys) from e
 
 
@@ -175,24 +173,24 @@ class DataValidation:
         """
         try:
             validation_error_msg = ""
-            self.logger.info("Starting data validation process.")
+            logging.info("Starting data validation process.")
 
 
             # Reading dataset
             df = read_data(file_path=self.data_ingestion_artifact.data_file_path)
-            self.logger.info("Training and testing datasets loaded successfully.")
+            logging.info("Training and testing datasets loaded successfully.")
 
 
             # Step 1: Validate number of columns in training and testing datasets
             status = self.validate_number_of_columns(dataframe=df)
-            self.logger.info(f"All required columns present in dataframe: {status}")
+            logging.info(f"All required columns present in dataframe: {status}")
             if not status:
                 validation_error_msg += "Required columns are missing in dataframe.\n"
 
 
             # Step 2: Validate column existence in training and testing datasets
             status = self.is_column_exist(df=df)
-            self.logger.info(f"Validation of column existence in dataframe: {status}")
+            logging.info(f"Validation of column existence in dataframe: {status}")
             if not status:
                 validation_error_msg += "Required or sensitive columns validation failed for dataframe.\n"
 
@@ -210,14 +208,14 @@ class DataValidation:
                 drift_status = self.detect_dataset_drift(train_df, test_df)
 
                 if drift_status:
-                    self.logger.warning("Drift detected between training and testing datasets.")
+                    logging.warning("Drift detected between training and testing datasets.")
                     validation_error_msg += "Drift detected between training and testing datasets.\n"
 
                 else:
-                    self.logger.info("No drift detected between training and testing datasets.")
+                    logging.info("No drift detected between training and testing datasets.")
 
             else:
-                self.logger.warning(f"Validation failed with the following errors: {validation_error_msg}")
+                logging.warning(f"Validation failed with the following errors: {validation_error_msg}")
 
 
             # Create and return DataValidationArtifact
@@ -226,10 +224,10 @@ class DataValidation:
                 message=validation_error_msg.strip(),
                 validation_report_file_path=self.data_validation_config.validation_report_file_path,
             )
-            self.logger.info(f"Data validation artifact generated: {data_validation_artifact}")
+            logging.info(f"Data validation artifact generated: {data_validation_artifact}")
 
             return data_validation_artifact
 
         except Exception as e:
-            self.logger.error(f"Error in initiate_data_validation: {str(e)}")
+            logging.error(f"Error in initiate_data_validation: {str(e)}")
             raise HotelBookingException(f"Error in initiate_data_validation: {str(e)}", sys) from e
