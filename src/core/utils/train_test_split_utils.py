@@ -11,7 +11,7 @@ from src.core.exception import HotelBookingException
 
 # split data into three datasets train, test and validation datasets
 @staticmethod
-def split_into_train_test_val(dataframe: pd.DataFrame) -> tuple:
+def split_into_train_test_val(dataframe: pd.DataFrame, test_size: float, validation_size: float) -> tuple:
     """
     Method Name: split_data
     Description :   Splits the given DataFrame into three datasets: train, test, and validation.
@@ -24,16 +24,16 @@ def split_into_train_test_val(dataframe: pd.DataFrame) -> tuple:
         # Split into train and remaining (test + validation)
         train_data, temp_data = train_test_split(
             dataframe, 
-            test_size=0.30,  # 30% for test + validation
-            random_state=42, 
+            test_size=test_size,  # 30% for test + validation
+            random_state=12, 
             shuffle=True
         )
 
         # Split remaining into test and validation
         test_data, validation_data = train_test_split(
             temp_data, 
-            test_size=0.50,  # Split 30% into 50% test and 50% validation
-            random_state=42, 
+            test_size=validation_size,  # Split 30% into 50% test and 50% validation
+            random_state=12, 
             shuffle=True
         )
 
