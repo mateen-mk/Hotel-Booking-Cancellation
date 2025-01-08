@@ -6,7 +6,7 @@ from pandas import DataFrame
 from evidently.model_profile import Profile
 from evidently.model_profile.sections import DataDriftProfileSection
 
-from core.logger.data_logger import logging
+from src.core.logger.data_logger import logging
 from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import DataValidationConfig
