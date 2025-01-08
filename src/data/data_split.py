@@ -35,8 +35,17 @@ class DataSplit:
         - data_split_config: DataSplitConfig
         - data_ingestion_artifact: DataIngestionArtifact
         """
-        self.data_split_config = data_split_config
-        self.data_ingestion_artifact = data_ingestion_artifact
+        try:
+            logging.info("")
+            logging.info("- - - Started Data Split Stage: - - -")
+            logging.info("- "*50)
+
+            self.data_split_config = data_split_config
+            self.data_ingestion_artifact = data_ingestion_artifact
+
+        except Exception as e:
+            logging.error(f"Error in DataSplit initialization: {str(e)}")
+            raise HotelBookingException(f"Error during DataSplit initialization: {str(e)}", sys) from e
 
 
     def initiate_data_split(self) -> DataSplitArtifact:
@@ -77,6 +86,7 @@ class DataSplit:
                 test_data_file_path=self.data_split_config.test_data_file_path,
                 validation_data_file_path=self.data_split_config.validation_data_file_path
             )
+            logging.info(f"Data Split artifact: {data_split_artifact}")
 
             logging.info("Exited the initiate_data_split method of DataSplit class.")
             return data_split_artifact
