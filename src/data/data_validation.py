@@ -18,9 +18,8 @@ from src.core.utils.data_utils import read_data
 from src.core.utils.yaml_utils import (read_yaml, 
                                        write_yaml)
 
-
 from src.core.constants import (SCHEMA_FILE_PATH,
-                                DATA_VALIDATION_SPLIT_RATIO)
+                                VALIDATION_REPORT_SPLIT_RATIO)
 
 
 
@@ -200,7 +199,7 @@ class DataValidation:
 
 
             # Step 3: Split dataset into training and testing datasets
-            train_df, test_df = train_test_split_for_data_validation(dataframe=df, test_size=DATA_VALIDATION_SPLIT_RATIO)
+            train_df, test_df = train_test_split_for_data_validation(dataframe=df, test_size=VALIDATION_REPORT_SPLIT_RATIO)
 
 
             # Step 4: Detect dataset drift if validation passes
