@@ -124,11 +124,11 @@ class DataIngestion:
             save_data(dataframe, data_file_path)
 
             
-            logging.info("Exited initiate_data_ingestion method of DataIngestionClass")
-  
             data_ingestion_artifact = DataIngestionArtifact(data_file_path=data_file_path)
             logging.info(f"Data ingestion artifact: {data_ingestion_artifact}")
         
+        
+            logging.info("Exited initiate_data_ingestion method of DataIngestionClass")
             return data_ingestion_artifact
         
         except Exception as e:
