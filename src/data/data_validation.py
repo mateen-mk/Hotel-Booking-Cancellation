@@ -25,7 +25,9 @@ from src.core.constants import (SCHEMA_FILE_PATH,
 
 
 class DataValidation:
-    def __init__(self, data_ingestion_artifact: DataIngestionArtifact, data_validation_config: DataValidationConfig):
+    def __init__(self, 
+                 data_ingestion_artifact: DataIngestionArtifact, 
+                 data_validation_config: DataValidationConfig):
         """
         :param data_ingestion_artifact: Output reference of data ingestion artifact stage
         :param data_validation_config: configuration for data validation
@@ -223,8 +225,10 @@ class DataValidation:
                 message=validation_error_msg.strip(),
                 validation_report_file_path=self.data_validation_config.validation_report_file_path,
             )
-            logging.info(f"Data validation artifact generated: {data_validation_artifact}")
+            logging.info(f"Data validation artifact: {data_validation_artifact}")
 
+
+            logging.info("Exited the initiate_data_validation method of DataValidation class.")
             return data_validation_artifact
 
         except Exception as e:
