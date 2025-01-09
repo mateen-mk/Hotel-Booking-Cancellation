@@ -62,9 +62,11 @@ class DataSplit:
             logging.info(f"Loading dataset from {data_path}.")
             data = read_data(data_path)
 
+
             # Perform train-test-validation split using utility
             logging.info("Performing train-test-validation split.")
             train_data, test_data, validation_data = split_into_train_test_val(data, TEST_SET_SPLIT_RATIO, VALIDATION_SET_SPLIT_RATIO)
+
 
             # Save split data using utility function
             logging.info("Saving split data to respective paths.")
@@ -72,13 +74,16 @@ class DataSplit:
             os.makedirs(os.path.dirname(self.data_split_config.test_data_file_path), exist_ok=True)
             os.makedirs(os.path.dirname(self.data_split_config.validation_data_file_path), exist_ok=True)
 
-            save_data(train_data, self.data_split_config.train_data_file_path)
-            save_data(test_data, self.data_split_config.test_data_file_path)
-            save_data(validation_data, self.data_split_config.validation_data_file_path)
 
+            save_data(train_data, self.data_split_config.train_data_file_path)
             logging.info(f"Training data saved at {self.data_split_config.train_data_file_path}.")
+
+            save_data(test_data, self.data_split_config.test_data_file_path)
             logging.info(f"Testing data saved at {self.data_split_config.test_data_file_path}.")
+
+            save_data(validation_data, self.data_split_config.validation_data_file_path)
             logging.info(f"Validation data saved at {self.data_split_config.validation_data_file_path}.")
+
 
             # Return DataSplitArtifact
             data_split_artifact = DataSplitArtifact(
@@ -87,6 +92,7 @@ class DataSplit:
                 validation_data_file_path=self.data_split_config.validation_data_file_path
             )
             logging.info(f"Data Split artifact: {data_split_artifact}")
+
 
             logging.info("Exited the initiate_data_split method of DataSplit class.")
             return data_split_artifact
