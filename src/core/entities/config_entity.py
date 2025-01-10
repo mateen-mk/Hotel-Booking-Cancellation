@@ -17,24 +17,22 @@ class DataIngestionConfig:
 # Data Validation Configuration
 @dataclass
 class DataValidationConfig:
-    validation_data_dir = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, VALIDATION_DATA_DIR)
-    validation_report_file_path: str = os.path.join(validation_data_dir, DATA_VALIDATION_REPORT)
+    validation_report_dir = os.path.join(from_root(), ARTIFACTS_DIR, REPORTS_DIR, VALIDATION_REPORT_DIR)
+    validation_report_file_path: str = os.path.join(validation_report_dir, DATA_VALIDATION_REPORT)
+
+
+# Data Preprocessing Configuration
+@dataclass
+class DataPreprocessingConfig:
+    processed_data_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, PROCESSED_DATA_DIR)
+    preprocessed_object_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, OBJECTS_DIR, PREPROCESSED_OBJECT_DIR)
+    processed_data_file_path: str = os.path.join(processed_data_dir, DATA_PREPROCESSING_DATA_FILE)
+    preprocessed_object_file_path: str = os.path.join(preprocessed_object_dir, DATA_PREPROCESSING_OBJECT_FILE)
 
 
 # Data Split Configuration
 class DataSplitConfig:
-    interim_data_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, INTERIM_DATA_DIR)
-    train_data_file_path: str = os.path.join(interim_data_dir, DATA_SPLIT_TRAIN_FILE)
-    test_data_file_path: str = os.path.join(interim_data_dir, DATA_SPLIT_TEST_FILE)
-    validation_data_file_path: str = os.path.join(interim_data_dir, DATA_SPLIT_VALIDATION_FILE)
-
-
-# Data Preprocessing Configuration
-# @dataclass
-# class DataPreprocessingConfig:
-#     processed_data_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, PROCESSED_DATA_DIR)
-#     preprocessed_object_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, PREPROCESSED_OBJECT_DIR)
-#     processed_train_file_path: str = os.path.join(processed_data_dir, DATA_PREPROCESSING_TRAIN_FILE)
-#     processed_test_file_path: str = os.path.join(processed_data_dir, DATA_PREPROCESSING_TEST_FILE)
-#     processed_validation_file_path: str = os.path.join(processed_data_dir, DATA_PREPROCESSING_VALIDATION_FILE)
-#     preprocessed_object_file_path: str = os.path.join(preprocessed_object_dir, DATA_PREPROCESSING_OBJECT_FILE)
+    splitted_data_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, SPLITTED_DATA_DIR)
+    train_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_TRAIN_FILE)
+    test_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_TEST_FILE)
+    validation_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_VALIDATION_FILE)
