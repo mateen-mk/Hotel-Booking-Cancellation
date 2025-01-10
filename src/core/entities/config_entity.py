@@ -10,8 +10,9 @@ from src.core.constants import *
 @dataclass
 class DataIngestionConfig:
     raw_data_dir = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, RAW_DATA_DIR)
+    interim_data_dir = os.path.join(from_root(),ARTIFACTS_DIR, DATA_DIR, INTERIM_DATA_DIR)
     raw_file_path: str = os.path.join(raw_data_dir, DATA_INGESTION_RAW_FILE) 
-    data_file_path: str = os.path.join(raw_data_dir, DATA_INGESTION_DATA_FILE)
+    data_file_path: str = os.path.join(interim_data_dir, DATA_INGESTION_DATA_FILE)
 
 
 # Data Validation Configuration
