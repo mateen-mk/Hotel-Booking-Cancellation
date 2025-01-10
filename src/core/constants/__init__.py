@@ -27,22 +27,32 @@ DATA_DIR: str = 'data'
 REPORTS_DIR: str = 'reports'
 OBJECTS_DIR: str = 'objects'
 
-# Data Ingestion constants
+# Sub-Data Directory constants
 RAW_DATA_DIR: str = 'raw'
+INTERIM_DATA_DIR: str = 'interim'
+PROCESSED_DATA_DIR: str = 'processed'
+SPLITTED_DATA_DIR: str = 'splitted'
+
+# Sub-Reports Directory constants
+VALIDATION_REPORT_DIR: str = 'validation'
+
+# Sub-Objects Directory constants
+MODEL_OBJECT_DIR: str = 'model'
+PREPROCESSED_OBJECT_DIR: str = 'preprocessor'
+
+
+# Data Ingestion constants
 DATA_INGESTION_RAW_FILE: str = 'raw.csv'
 DATA_INGESTION_DATA_FILE: str = 'data.csv'
 
 # Data Validation constants
-VALIDATION_DATA_DIR: str = 'validation'
 DATA_VALIDATION_REPORT: str = 'drift_report.yaml'
 
+# Data Preprocessing constants
+DATA_PREPROCESSING_DATA_FILE: str = 'processed.csv'
+DATA_PREPROCESSING_OBJECT_FILE: str = 'preprocessor.pkl'
+
 # Data Split constants
-INTERIM_DATA_DIR: str = 'interim'
 DATA_SPLIT_TRAIN_FILE: str = "train.csv"
 DATA_SPLIT_TEST_FILE: str = "test.csv"
 DATA_SPLIT_VALIDATION_FILE: str = "val.csv"
-
-# Data Preprocessing constants
-PROCESSED_DATA_DIR: str = 'processed'
-PREPROCESSED_OBJECT_DIR: str = 'preprocessor'
-DATA_PREPROCESSING_OBJECT_FILE: str = 'preprocessor.pkl'
