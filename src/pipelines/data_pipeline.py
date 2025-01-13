@@ -7,13 +7,16 @@ from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import (DataIngestionConfig,
                                              DataValidationConfig,
+                                             DataPreprocessingConfig,
                                              DataSplitConfig) 
 from src.core.entities.artifact_entity import (DataIngestionArtifact,
                                                DataValidationArtifact,
+                                               DataPreprocessingArtifact,
                                                DataSplitArtifact)
 
 from src.data.data_ingestion import DataIngestion
 from src.data.data_validation import DataValidation
+from src.data.data_preprocessing import DataPreprocessing
 from src.data.data_split import DataSplit
 
 
@@ -32,6 +35,7 @@ class DataPipeline:
         logging.info("* "*50)
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidationConfig()
+        self.data_preprocessing_config = DataPreprocessingConfig()
         self.data_split_config = DataSplitConfig()
 
 
@@ -60,7 +64,8 @@ class DataPipeline:
             raise HotelBookingException(f"Error in start_data_ingestion: {str(e)}",sys) from e
         
 
-    def start_data_validation(self, data_ingestion_artifact: DataIngestionArtifact) -> DataValidationArtifact:
+    def start_data_validation(self, 
+                              data_ingestion_artifact: DataIngestionArtifact) -> DataValidationArtifact:
         """
         This method of DataPipeline class is responsible for starting data validation component
         """
@@ -85,8 +90,38 @@ class DataPipeline:
             logging.error(f"Error in start_data_validation: {str(e)}")
             raise HotelBookingException(f"Error in start_data_validation: {str(e)}",sys) from e
         
+    
+    def start_data_preprocessing(self, 
+                                 data_ingestion_artifact: DataIngestionArtifact,
+                                 data_validation_artifact: DataValidationArtifact)-> DataPreprocessingArtifact:
+        """
+        This method of DataPipeline class is responsible for starting data processing component
+        """
+        try:
+            logging.info("_"*100)
+            logging.info("")
+            logging.info("! ! ! Entered start_data_preprocessing method of DataPipeline Class:")
 
-    def start_data_split(self, data_ingestion_artifact: DataIngestionArtifact) -> DataSplitArtifact:
+            data_preprocessing = DataPreprocessing(data_ingestion_artifact,
+                                                   data_validation_artifact,
+                                                   self.data_preprocessing_config)
+            data_preprocessing_artifact = data_preprocessing.initiate_data_preprocessing()
+            logging.info("- "*50)
+            logging.info("- - - Data Preprocessed Successfully! - - -")
+
+            logging.info("")
+            logging.info("! ! ! Exited the start_data_preprocessing method of DataPipeline class:")
+            logging.info("_"*100)
+
+            return data_preprocessing_artifact
+                
+        except Exception as e:
+            logging.error(f"Error in start_data_preprocessing: {str(e)}")
+            raise HotelBookingException(f"Error in start_data_preprocessing: {str(e)}",sys) from e
+
+
+    def start_data_split(self, 
+                         data_preprocessing_artifact: DataPreprocessingArtifact) -> DataSplitArtifact:
         """
         This method of DataPipeline class is responsible for starting data split component
         """
@@ -95,8 +130,8 @@ class DataPipeline:
             logging.info("")
             logging.info("! ! ! Entered start_data_split method of DataPipeline Class:")
             
-            data_split = DataSplit(data_ingestion_artifact,
-                                             self.data_split_config)
+            data_split = DataSplit(data_preprocessing_artifact,
+                                   self.data_split_config)
             data_split_artifact = data_split.initiate_data_split()
             logging.info("- "*50)
             logging.info("- - - Data Splitted Successfully! - - -")
@@ -124,7 +159,8 @@ class DataPipeline:
             
             data_ingestion_artifact = self.start_data_ingestion()
             data_validation_artifact = self.start_data_validation(data_ingestion_artifact)
-            data_split_artifact = self.start_data_split(data_ingestion_artifact)
+            data_preprocessing_artifact = self.start_data_preprocessing(data_ingestion_artifact, data_validation_artifact)
+            data_split_artifact = self.start_data_split(data_preprocessing_artifact)
             
             # Further processing and data analysis can be added here
             
