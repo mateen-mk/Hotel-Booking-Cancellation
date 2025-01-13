@@ -139,10 +139,10 @@ noisy_values_columns:
 # Data Transformation
 transformation:
   label_encoding:
+    - hotel
     - arrival_date_month
 
   onehot_encoding:
-    - hotel
     - meal
     - market_segment
     - distribution_channel
