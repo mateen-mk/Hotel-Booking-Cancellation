@@ -204,17 +204,16 @@ class DataPreprocessing:
                 data = pd.get_dummies(data, columns=onehot_encoding_columns, drop_first=True)
                 logging.info(f"One-hot encoding applied on columns: {onehot_encoding_columns}")
                 return data
-            
+
+            label_encoder = FunctionTransformer(label_encoding_function)
+            onehot_encoder = FunctionTransformer(onehot_encoding_function)
+            scaler = MinMaxScaler()
+
             def scaling_function(data: pd.DataFrame) -> pd.DataFrame:
                 data[scaling_columns] = scaler.fit_transform(data[scaling_columns])
                 logging.info(f"Scaling applied on columns: {scaling_columns}")
                 return data
 
-
-            # Initialize transformers
-            label_encoder = FunctionTransformer(label_encoding_function)
-            onehot_encoder = FunctionTransformer(onehot_encoding_function)
-            scaler = MinMaxScaler()
             logging.info("Initialized MinMaxScaler, Custom One-hot Encoder, Label Encoder")
 
 
