@@ -7,7 +7,7 @@ from src.core.logger.data_logger import logging
 from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import DataSplitConfig
-from src.core.entities.artifact_entity import (DataIngestionArtifact, 
+from src.core.entities.artifact_entity import (DataPreprocessingArtifact, 
                                                DataSplitArtifact)
 
 from src.core.utils.train_test_split_utils import split_into_train_test_val
@@ -26,14 +26,14 @@ class DataSplit:
     """
 
     def __init__(self, 
-                 data_ingestion_artifact: DataIngestionArtifact,
+                 data_preprocessing_artifact: DataPreprocessingArtifact,
                  data_split_config: DataSplitConfig):
         """
         Initialize DataSplit class with configuration and ingestion artifacts.
 
         Parameters:
         - data_split_config: DataSplitConfig
-        - data_ingestion_artifact: DataIngestionArtifact
+        - data_preprocessing_artifact: DataPreprocessingArtifact
         """
         try:
             logging.info("")
@@ -41,7 +41,7 @@ class DataSplit:
             logging.info("- "*50)
 
             self.data_split_config = data_split_config
-            self.data_ingestion_artifact = data_ingestion_artifact
+            self.data_preprocessing_artifact = data_preprocessing_artifact
 
         except Exception as e:
             logging.error(f"Error in DataSplit initialization: {str(e)}")
@@ -58,7 +58,7 @@ class DataSplit:
         logging.info("Entered the initiate_data_split method of DataSplit class.")
         try:
             # Load the dataset
-            data_path = self.data_ingestion_artifact.data_file_path
+            data_path = self.data_preprocessing_artifact.processed_data_file_path
             logging.info(f"Loading dataset from {data_path}.")
             data = read_data(data_path)
 
@@ -66,6 +66,12 @@ class DataSplit:
             # Perform train-test-validation split using utility
             logging.info("Performing train-test-validation split.")
             train_data, test_data, validation_data = split_into_train_test_val(data, TEST_SET_SPLIT_RATIO, VALIDATION_SET_SPLIT_RATIO)
+
+
+            # Logging the dataset sizes
+            logging.info(f"\tTrain data size: {len(train_data)}")
+            logging.info(f"\tTest data size: {len(test_data)}")
+            logging.info(f"\tValidation data size: {len(validation_data)}")
 
 
             # Save split data using utility function
