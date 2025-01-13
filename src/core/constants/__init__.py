@@ -13,6 +13,7 @@ VALIDATION_REPORT_SPLIT_RATIO: float = 0.2
 TEST_SET_SPLIT_RATIO: float = 0.3
 VALIDATION_SET_SPLIT_RATIO: float = 0.5
 SCHEMA_FILE_PATH = os.path.join("settings", "schema.yaml")
+HOTEL_MAPPING: dict = {'Resort Hotel': 0, 'City Hotel': 1}
 MONTH_ORDER: list =['January', 'February', 'March', 'April', 'May', 'June', 
                     'July', 'August', 'September', 'October', 'November', 'December']
 
