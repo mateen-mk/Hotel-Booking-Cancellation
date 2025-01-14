@@ -13,10 +13,9 @@ from src.core.entities.config_entity import DataValidationConfig
 from src.core.entities.artifact_entity import (DataIngestionArtifact,
                                                DataValidationArtifact)
 
-from src.core.utils.train_test_split_utils import train_test_split_for_data_validation
 from src.core.utils.data_utils import read_data
-from src.core.utils.yaml_utils import (read_yaml, 
-                                       write_yaml)
+from src.core.utils.yaml_utils import (read_yaml, write_yaml)
+from src.core.utils.train_test_split_utils import train_test_split_for_data_validation
 
 from src.core.constants import (SCHEMA_FILE_PATH,
                                 VALIDATION_REPORT_SPLIT_RATIO)
