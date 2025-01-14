@@ -14,16 +14,20 @@ from src.core.logger.model_logger import logging
 from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import ModelTrainerConfig
-from src.core.entities.artifact_entity import (DataPreprocessingArtifact, 
-                                                                   ModelTrainerArtifact, 
-                                                                   ClassificationMetrixArtifact)
+from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
+                                               DataSplitArtifact,
+                                               ModelTrainerArtifact, 
+                                               ClassificationMetrixArtifact)
 
-from src.core.utils.main_utils import (DataUtils, 
-                                                             TrainTestSplitUtils, 
-                                                             YamlUtils, 
-                                                             ObjectUtils)
-from src.core.constants import (TARGET_COLUMN, 
-                                                      TRAIN_TEST_SPLIT_RATIO)
+from src.model.predictor import HotelBookingModel
+
+from src.core.utils.data_utils import read_data 
+from src.core.utils.yaml_utils import (read_yaml, write_yaml)
+from src.core.utils.object_utils import (load_object, save_object)
+from src.core.utils.train_test_split_utils import (train_test_split_for_tuning,
+                                                   separate_features_and_target)
+
+from src.core.constants import TARGET_COLUMN
 
 
 
@@ -33,7 +37,9 @@ class ModelTrainer:
     Class Name: ModelTrainer
     Description: Trains a model using neuro_mf and returns trained model object and classification metrics
     """
-    def __init__(self, data_preprocessing_artifact: DataPreprocessingArtifact,
+    def __init__(self, 
+                 data_preprocessing_artifact: DataPreprocessingArtifact,
+                 data_split_artifact: DataSplitArtifact,
                  model_trainer_config: ModelTrainerConfig):
         """
         :param data_ingestion_artifact: Output reference of data ingestion artifact stage
@@ -45,6 +51,7 @@ class ModelTrainer:
             logging.info("- "*50)
 
             self.data_preprocessing_artifact = data_preprocessing_artifact
+            self.data_split_artifact = data_split_artifact
             self.model_trainer_config = model_trainer_config
 
         except Exception as e:
@@ -86,12 +93,12 @@ class ModelTrainer:
         try:
 
             # Use 30% of the dataset for hyperparameter tuning
-            X_tune, y_tune = TrainTestSplitUtils.train_test_split_for_tuning(X_train, y_train, test_size=0.7)
+            X_tune, y_tune = train_test_split_for_tuning(X_train, y_train, test_size=0.7)
             logging.info(f"Tuning dataset size: {X_tune.shape}, {y_tune.shape}")
 
 
             # Load model configuration
-            model_config = YamlUtils.read_yaml_file(self.model_trainer_config.model_config_file_path)
+            model_config = read_yaml(self.model_trainer_config.model_config_file_path)
             models = model_config['model_selection']
             grid_search_params = model_config['grid_search']['params']
             logging.info("Model configurations and hyperparameter grids loaded successfully")
@@ -144,23 +151,23 @@ class ModelTrainer:
         logging.info("Starting model training process...")
         try:
             # Load training data
-            train_df = DataUtils.read_data(self.data_preprocessing_artifact.train_data_file_path)
-            logging.info(f"Loaded preprocessed training data from: {self.data_preprocessing_artifact.train_data_file_path}")
+            train_df = read_data(self.data_split_artifact.train_data_file_path)
+            logging.info(f"Loaded preprocessed training data from: {self.data_split_artifact.train_data_file_path}")
             logging.info(f"Training Data shape: {train_df.shape}")
 
             # Separate training data into X and y
-            X_train, y_train = TrainTestSplitUtils.separate_features_and_target(train_df, TARGET_COLUMN)
+            X_train, y_train = separate_features_and_target(train_df, TARGET_COLUMN)
             logging.info("Seperate Training data into X and y completed successfully")
             logging.info(f"X_train set size: {X_train.shape}, y_train set size: {y_train.shape}")
 
 
             # Load validation data
-            val_df = DataUtils.read_data(self.data_preprocessing_artifact.validation_data_file_path)
-            logging.info(f"Loaded preprocessed validation data from: {self.data_preprocessing_artifact.validation_data_file_path}")
+            val_df = read_data(self.data_split_artifact.validation_data_file_path)
+            logging.info(f"Loaded preprocessed validation data from: {self.data_split_artifact.validation_data_file_path}")
             logging.info(f"Validation Data shape: {val_df.shape}")
 
             # Separate Validaton data into X and y
-            X_val, y_val = TrainTestSplitUtils.separate_features_and_target(val_df, TARGET_COLUMN)
+            X_val, y_val = separate_features_and_target(val_df, TARGET_COLUMN)
             logging.info("Seperate Validaton data into X and y completed successfully")
             logging.info(f"X_val set size: {X_val.shape}, y_val set size: {y_val.shape}")
 
@@ -201,14 +208,14 @@ class ModelTrainer:
             
 
             # Save the best model
-            preprocessing_obj = ObjectUtils.load_object(file_path=self.data_preprocessing_artifact.preprocessed_object_file_path)
+            preprocessing_obj = load_object(file_path=self.data_preprocessing_artifact.preprocessed_object_file_path)
             hotel_booking_model = HotelBookingModel(preprocessing_object=preprocessing_obj, trained_model_object=best_model)
-            ObjectUtils.save_object(file_path=self.model_trainer_config.trained_model_file_path, obj=hotel_booking_model)
+            save_object(file_path=self.model_trainer_config.trained_model_file_path, obj=hotel_booking_model)
             logging.info("Best model saved successfully")
 
 
             # Save the best metrics
-            YamlUtils.write_yaml_file(self.model_trainer_config.metric_article_file_path, metric_artifact)
+            write_yaml(self.model_trainer_config.metric_article_file_path, metric_artifact)
             logging.info("Best metrics saved successfully")
 
 
