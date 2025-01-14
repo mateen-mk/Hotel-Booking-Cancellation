@@ -10,9 +10,8 @@ from src.core.entities.config_entity import DataSplitConfig
 from src.core.entities.artifact_entity import (DataPreprocessingArtifact, 
                                                DataSplitArtifact)
 
+from src.core.utils.data_utils import (read_data, save_data)
 from src.core.utils.train_test_split_utils import split_into_train_test_val
-from src.core.utils.data_utils import (read_data, 
-                                       save_data)
 
 from src.core.constants import (TEST_SET_SPLIT_RATIO, 
                                 VALIDATION_SET_SPLIT_RATIO)
