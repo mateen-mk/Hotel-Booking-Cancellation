@@ -10,20 +10,19 @@ from sklearn.metrics import (accuracy_score,
                              recall_score, 
                              roc_auc_score)
 
-from src.hotel_booking_cancellation.logger import logging
-from src.hotel_booking_cancellation.exception import HotelBookingException
+from src.core.logger.model_logger import logging
+from src.core.exception import HotelBookingException
 
-from src.hotel_booking_cancellation.entity.estimator import HotelBookingModel
-from src.hotel_booking_cancellation.entity.config_entity import ModelTrainerConfig
-from src.hotel_booking_cancellation.entity.artifact_entity import (DataPreprocessingArtifact, 
+from src.core.entities.config_entity import ModelTrainerConfig
+from src.core.entities.artifact_entity import (DataPreprocessingArtifact, 
                                                                    ModelTrainerArtifact, 
                                                                    ClassificationMetrixArtifact)
 
-from src.hotel_booking_cancellation.utils.main_utils import (DataUtils, 
+from src.core.utils.main_utils import (DataUtils, 
                                                              TrainTestSplitUtils, 
                                                              YamlUtils, 
                                                              ObjectUtils)
-from src.hotel_booking_cancellation.constants import (TARGET_COLUMN, 
+from src.core.constants import (TARGET_COLUMN, 
                                                       TRAIN_TEST_SPLIT_RATIO)
 
 
