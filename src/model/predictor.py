@@ -1,22 +1,17 @@
 import sys
 
 from pandas import DataFrame
-from sklearn.pipeline import Pipeline
 
-from src.hotel_booking_cancellation.exception import HotelBookingException
-from src.hotel_booking_cancellation.logger import logging
-
-
+from src.core.exception import HotelBookingException
+from src.core.logger.model_logger import logging
     
 
 
 class HotelBookingModel:
-    def __init__(self, preprocessing_object: Pipeline, trained_model_object: object):
+    def __init__(self, trained_model_object: object):
         """
-        :param preprocessing_object: Input Object of preprocesser
         :param trained_model_object: Input Object of trained model 
         """
-        self.preprocessing_object = preprocessing_object
         self.trained_model_object = trained_model_object
 
     def predict(self, dataframe: DataFrame) -> DataFrame:
@@ -28,12 +23,12 @@ class HotelBookingModel:
         logging.info("Entered predict method of UTruckModel class")
 
         try:
+            
             logging.info("Using the trained model to get predictions")
-
-            transformed_feature = self.preprocessing_object.transform(dataframe)
-
+            prediction = self.trained_model_object.predict(dataframe)
             logging.info("Used the trained model to get predictions")
-            return self.trained_model_object.predict(transformed_feature)
+            
+            return prediction
 
         except Exception as e:
             raise HotelBookingException(e, sys) from e
