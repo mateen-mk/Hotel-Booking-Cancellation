@@ -1,4 +1,4 @@
-# src/constants/directory_constant.py is used to store directory constant values 
+# src/constants/directory_constant.py is used to store directory related constant values 
 
 # Directory constants
 ARTIFACTS_DIR: str = 'artifacts'
