@@ -3,7 +3,10 @@ import os
 from from_root import from_root
 from dataclasses import dataclass
 
-from src.core.constants import *
+from src.core.constants.common_constant import *
+from src.core.constants.directory_constant import *
+from src.core.constants.data_constant import *
+from src.core.constants.model_constant import *
 
 
 # Data Ingestion Configuration
@@ -37,3 +40,11 @@ class DataSplitConfig:
     train_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_TRAIN_FILE)
     test_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_TEST_FILE)
     validation_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_VALIDATION_FILE)
+
+
+# Model Trainer Configuration
+class ModelTrainerConfig:
+    model_object_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, OBJECTS_DIR, MODEL_OBJECT_DIR)
+    model_metrics_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, REPORTS_DIR, MODEL_METRICS_DIR)
+    model_object_file_path: str = os.path.join(model_object_dir, MODEL_TRAINER_MODEL_OBJECT_NAME)
+    model_metrics_file_path: str = os.path.join(model_metrics_dir, MODEL_TRAINER_METRICS_FILE_NAME)
