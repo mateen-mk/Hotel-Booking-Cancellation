@@ -27,7 +27,7 @@ from src.core.utils.object_utils import (load_object, save_object)
 from src.core.utils.train_test_split_utils import (train_test_split_for_tuning,
                                                    separate_features_and_target)
 
-from src.core.constants import TARGET_COLUMN
+from src.core.constants.common_constant import TARGET_COLUMN
 
 
 
