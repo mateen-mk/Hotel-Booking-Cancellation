@@ -29,3 +29,10 @@ class DataSplitArtifact:
     train_data_file_path:str
     test_data_file_path:str
     validation_data_file_path:str 
+
+
+# Model Trainer Artifact
+@dataclass
+class ModelTrainerArtifact:
+    model_object_file_path:str
+    model_metrics_file_path:str
