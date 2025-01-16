@@ -13,8 +13,8 @@ from src.core.entities.artifact_entity import DataIngestionArtifact
 from src.core.utils.yaml_utils import read_yaml 
 from src.core.utils.data_utils import save_data
 
-from src.core.constants import (DATASET_NAME,
-                                SCHEMA_FILE_PATH)
+from src.core.constants.common_constant import (DATASET_NAME,
+                                                SCHEMA_FILE_PATH)
 
 
 
