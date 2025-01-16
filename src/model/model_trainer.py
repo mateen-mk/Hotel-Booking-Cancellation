@@ -10,6 +10,8 @@ from sklearn.metrics import (accuracy_score,
                              recall_score, 
                              roc_auc_score)
 
+from src.model.predictor import HotelBookingModel
+
 from src.core.logger.model_logger import logging
 from src.core.exception import HotelBookingException
 
@@ -17,9 +19,7 @@ from src.core.entities.config_entity import ModelTrainerConfig
 from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
                                                DataSplitArtifact,
                                                ModelTrainerArtifact, 
-                                               ClassificationMetrixArtifact)
-
-from src.model.predictor import HotelBookingModel
+                                               ModelMetrics)
 
 from src.core.utils.data_utils import read_data 
 from src.core.utils.yaml_utils import (read_yaml, write_yaml)
@@ -27,7 +27,8 @@ from src.core.utils.object_utils import (load_object, save_object)
 from src.core.utils.train_test_split_utils import (train_test_split_for_tuning,
                                                    separate_features_and_target)
 
-from src.core.constants.common_constant import TARGET_COLUMN
+from src.core.constants.common_constant import (TARGET_COLUMN,
+                                                MODEL_PARAMS_FILE_PATH)
 
 
 
@@ -98,7 +99,7 @@ class ModelTrainer:
 
 
             # Load model configuration
-            model_config = read_yaml(self.model_trainer_config.model_config_file_path)
+            model_config = read_yaml(MODEL_PARAMS_FILE_PATH)
             models = model_config['model_selection']
             grid_search_params = model_config['grid_search']['params']
             logging.info("Model configurations and hyperparameter grids loaded successfully")
@@ -136,7 +137,6 @@ class ModelTrainer:
                 print(f"Best cross-validation score for {model_name}: {search.best_score_}\n")
                 logging.info(f"Best parameters for {model_name}: {search.best_params_}")
                 logging.info(f"Best cross-validation score for {model_name}: {search.best_score_}\n")
-
 
             logging.info("Hyperparameter tuning completed successfully")
 
@@ -179,7 +179,7 @@ class ModelTrainer:
             # Evaluate models
             best_model = None
             best_recall = 0
-            metric_artifact = None
+            metrics_artifact = None
 
 
             logging.info("Evaluating models on the test set")
@@ -195,7 +195,7 @@ class ModelTrainer:
 
                     best_recall = recall
                     best_model = model
-                    metric_artifact = ClassificationMetrixArtifact(
+                    metrics_artifact = ModelMetrics(
                         accuracy=float(result.loc['Accuracy'].values[0].replace('%', '')),
                         precision_score=float(result.loc['Precision (Class 1)'].values[0].replace('%', '')),
                         recall_score=recall,
@@ -210,18 +210,19 @@ class ModelTrainer:
             # Save the best model
             preprocessing_obj = load_object(file_path=self.data_preprocessing_artifact.preprocessed_object_file_path)
             hotel_booking_model = HotelBookingModel(preprocessing_object=preprocessing_obj, trained_model_object=best_model)
-            save_object(file_path=self.model_trainer_config.trained_model_file_path, obj=hotel_booking_model)
+            save_object(file_path=self.model_trainer_config.model_object_file_path, obj=hotel_booking_model)
             logging.info("Best model saved successfully")
 
 
             # Save the best metrics
-            write_yaml(self.model_trainer_config.metric_article_file_path, metric_artifact)
+            model_metrics = vars(metrics_artifact)
+            write_yaml(self.model_trainer_config.model_metrics_file_path, model_metrics)
             logging.info("Best metrics saved successfully")
 
 
             model_trainer_artifact = ModelTrainerArtifact(
-                trained_model_file_path=self.model_trainer_config.trained_model_file_path,
-                metric_artifact=self.model_trainer_config.metric_article_file_path
+                model_object_file_path=self.model_trainer_config.model_object_file_path,
+                model_metrics_file_path=self.model_trainer_config.model_metrics_file_path
             )
             logging.info(f"Model trainer artifact created: {model_trainer_artifact}")
 
