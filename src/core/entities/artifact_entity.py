@@ -36,3 +36,11 @@ class DataSplitArtifact:
 class ModelTrainerArtifact:
     model_object_file_path:str
     model_metrics_file_path:str
+
+@dataclass
+class ModelMetrics:
+    accuracy: float
+    precision_score: float
+    recall_score: float
+    f1_score: float
+    auc: float
