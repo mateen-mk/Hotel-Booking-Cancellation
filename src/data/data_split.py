@@ -13,8 +13,8 @@ from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
 from src.core.utils.data_utils import (read_data, save_data)
 from src.core.utils.train_test_split_utils import split_into_train_test_val
 
-from src.core.constants import (TEST_SET_SPLIT_RATIO, 
-                                VALIDATION_SET_SPLIT_RATIO)
+from src.core.constants.common_constant import (TEST_SET_SPLIT_RATIO, 
+                                                VALIDATION_SET_SPLIT_RATIO)
 
 
 
