@@ -7,8 +7,8 @@ from sqlalchemy import create_engine
 
 from src.core.exception import HotelBookingException
 
-from src.core.constants import (MYSQL_ENGINE_URL,
-                                DATABASE_NAME)
+from src.core.constants.common_constant import (MYSQL_ENGINE_URL,
+                                                DATABASE_NAME)
 
 
 
