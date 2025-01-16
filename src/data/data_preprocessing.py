@@ -18,9 +18,9 @@ from src.core.utils.yaml_utils import read_yaml
 from src.core.utils.object_utils import save_object
 from src.core.utils.data_utils import (read_data, save_data)
 
-from src.core.constants import (HOTEL_MAPPING,
-                                MONTH_ORDER,
-                                SCHEMA_FILE_PATH)
+from src.core.constants.common_constant import (HOTEL_MAPPING, 
+                                                MONTH_ORDER,
+                                                SCHEMA_FILE_PATH)
 
 
 
