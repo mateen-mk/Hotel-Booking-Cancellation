@@ -17,8 +17,8 @@ from src.core.utils.data_utils import read_data
 from src.core.utils.yaml_utils import (read_yaml, write_yaml)
 from src.core.utils.train_test_split_utils import train_test_split_for_data_validation
 
-from src.core.constants import (SCHEMA_FILE_PATH,
-                                VALIDATION_REPORT_SPLIT_RATIO)
+from src.core.constants.common_constant import (SCHEMA_FILE_PATH,
+                                                VALIDATION_REPORT_SPLIT_RATIO)
 
 
 
@@ -145,7 +145,7 @@ class DataValidation:
             json_report = json.loads(report)
 
 
-            write_yaml(file_path=self.data_validation_config.validation_report_file_path, content=json_report)
+            write_yaml(file_path=self.data_validation_config.validation_report_file_path, data=json_report)
 
 
             n_features = json_report["data_drift"]["data"]["metrics"]["n_features"]
