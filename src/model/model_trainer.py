@@ -12,7 +12,7 @@ from sklearn.metrics import (accuracy_score,
 
 from src.model.predictor import HotelBookingModel
 
-from src.core.logger.model_logger import logging
+from src.core.logger import logging
 from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import ModelTrainerConfig
@@ -47,8 +47,8 @@ class ModelTrainer:
         :param data_preprocessing_config: Configuration for data preprocessing
         """
         try:
-            logging.info("_"*100)
-            logging.info("\n| | Started Model Trainer Stage:")
+            logging.info("")
+            logging.info("- - - Started Model Training Stage: - - -")
             logging.info("- "*50)
 
             self.data_preprocessing_artifact = data_preprocessing_artifact
@@ -208,8 +208,8 @@ class ModelTrainer:
             
 
             # Save the best model
-            preprocessing_obj = load_object(file_path=self.data_preprocessing_artifact.preprocessed_object_file_path)
-            hotel_booking_model = HotelBookingModel(preprocessing_object=preprocessing_obj, trained_model_object=best_model)
+            # preprocessing_obj = load_object(file_path=self.data_preprocessing_artifact.preprocessed_object_file_path)
+            hotel_booking_model = HotelBookingModel(trained_model_object=best_model)
             save_object(file_path=self.model_trainer_config.model_object_file_path, obj=hotel_booking_model)
             logging.info("Best model saved successfully")
 
