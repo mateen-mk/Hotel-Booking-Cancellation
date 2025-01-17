@@ -3,7 +3,7 @@
 import os
 import sys
 
-from src.core.logger.data_logger import logging
+from src.core.logger import logging
 from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import DataSplitConfig
