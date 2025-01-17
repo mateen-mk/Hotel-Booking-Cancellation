@@ -6,7 +6,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import FunctionTransformer, MinMaxScaler
 from sklearn.compose import ColumnTransformer
 
-from src.core.logger.data_logger import logging
+from src.core.logger import logging
 from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import DataPreprocessingConfig
