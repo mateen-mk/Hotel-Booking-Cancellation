@@ -33,6 +33,7 @@ class DataPipeline:
         logging.info("* "*50)
         logging.info("- - - - - Started DataPipeline - - - - -")
         logging.info("* "*50)
+        
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidationConfig()
         self.data_preprocessing_config = DataPreprocessingConfig()
