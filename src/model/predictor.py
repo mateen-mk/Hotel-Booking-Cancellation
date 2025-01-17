@@ -3,7 +3,7 @@ import sys
 from pandas import DataFrame
 
 from src.core.exception import HotelBookingException
-from src.core.logger.model_logger import logging
+from src.core.logger import logging
     
 
 
