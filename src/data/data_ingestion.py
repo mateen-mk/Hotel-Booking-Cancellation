@@ -3,7 +3,7 @@ import sys
 
 from pandas import DataFrame
 
-from src.core.logger.data_logger import logging
+from src.core.logger import logging
 from src.core.exception import HotelBookingException
 
 from src.configs.mysql_connection import HotelBookingData
