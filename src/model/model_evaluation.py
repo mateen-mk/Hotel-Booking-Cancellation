@@ -7,8 +7,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from src.core.logger import logging
 from src.core.exception import HotelBookingException
 
-from src.core.entity.config_entity import ModelEvaluationConfig
-from src.core.entity.artifact_entity import (ModelTrainerArtifact, 
+from src.core.entities.config_entity import ModelEvaluationConfig
+from src.core.entities.artifact_entity import (ModelTrainerArtifact, 
                                                                    DataPreprocessingArtifact, 
                                                                    ModelEvaluationArtifact)
 
