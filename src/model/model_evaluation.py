@@ -4,16 +4,16 @@ import pandas as pd
 
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
 
-from src.hotel_booking_cancellation.logger import logging
-from src.hotel_booking_cancellation.exception import HotelBookingException
+from src.core.logger import logging
+from src.core.exception import HotelBookingException
 
-from src.hotel_booking_cancellation.entity.config_entity import ModelEvaluationConfig
-from src.hotel_booking_cancellation.entity.artifact_entity import (ModelTrainerArtifact, 
+from src.core.entity.config_entity import ModelEvaluationConfig
+from src.core.entity.artifact_entity import (ModelTrainerArtifact, 
                                                                    DataPreprocessingArtifact, 
                                                                    ModelEvaluationArtifact)
 
-from src.hotel_booking_cancellation.constants import TARGET_COLUMN
-from src.hotel_booking_cancellation.utils.main_utils import (ObjectUtils, 
+from src.core.constants.common_constant import TARGET_COLUMN
+from src.core.utils.main_utils import (ObjectUtils, 
                                                              DataUtils,
                                                              YamlUtils)
 
