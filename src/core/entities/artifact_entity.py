@@ -11,7 +11,7 @@ class DataIngestionArtifact:
 # Data Validation Artifact
 @dataclass
 class DataValidationArtifact:
-    validation_status:bool
+    validation_status: bool
     message: str
     validation_report_file_path: str
 
@@ -19,23 +19,23 @@ class DataValidationArtifact:
 # Data Preprocessing Artifact
 @dataclass
 class DataPreprocessingArtifact:
-    processed_data_file_path:str                # file path to preprocessed data
-    preprocessed_object_file_path:str           # file path to preprocessing.pkl
+    processed_data_file_path: str                # file path to preprocessed data
+    preprocessed_object_file_path: str           # file path to preprocessing.pkl
 
 
 # Data Split Artifact
 @dataclass
 class DataSplitArtifact:
-    train_data_file_path:str
-    test_data_file_path:str
-    validation_data_file_path:str 
+    train_data_file_path: str
+    test_data_file_path: str
+    validation_data_file_path: str 
 
 
 # Model Trainer Artifact
 @dataclass
 class ModelTrainerArtifact:
-    model_object_file_path:str
-    model_metrics_file_path:str
+    model_object_file_path: str
+    model_metrics_file_path: str
 
 
 # Model Metrics Artifact
@@ -48,3 +48,7 @@ class ModelMetrics:
     auc: float
 
 
+# Model Evaluation Artifact
+@dataclass
+class ModelEvaluationArtifact:
+    evaluation_report_file_path: str
