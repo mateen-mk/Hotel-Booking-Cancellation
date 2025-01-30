@@ -31,12 +31,12 @@ class ModelEvaluation:
     """
 
     def __init__(self, 
-                 model_trainer_artifact: ModelTrainerArtifact, 
                  data_split_artifact: DataSplitArtifact,
+                 model_trainer_artifact: ModelTrainerArtifact, 
                  model_evaluation_config: ModelEvaluationConfig):
         """
-        :param model_trainer_artifact: Trained model artifact.
         :param data_split_artifact: Split data artifact.
+        :param model_trainer_artifact: Trained model artifact.
         :param model_evaluation_config: Configuration for model evaluation.
         """
         try:
@@ -44,8 +44,8 @@ class ModelEvaluation:
             logging.info("- - - Started Model Evaluation Stage: - - -")
             logging.info("- "*50)
 
-            self.model_trainer_artifact = model_trainer_artifact
             self.data_split_artifact = data_split_artifact
+            self.model_trainer_artifact = model_trainer_artifact
             self.model_evaluation_config = model_evaluation_config
 
         except Exception as e:
