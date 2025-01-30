@@ -64,8 +64,8 @@ class ModelPipeline:
         
 
     def start_model_evaluation(self, 
-                               model_trainer_artifact: ModelTrainerArtifact,
-                               data_split_artifact: DataSplitArtifact) -> ModelEvaluationArtifact:
+                               data_split_artifact: DataSplitArtifact,
+                               model_trainer_artifact: ModelTrainerArtifact) -> ModelEvaluationArtifact:
         """
         This method of ModelPipeline class is responsible for starting model evaluation component
         """
@@ -74,8 +74,8 @@ class ModelPipeline:
             logging.info("")
             logging.info("! ! ! Entered start_model_evaluation method of ModelPipeline Class:")
             
-            model_evaluation = ModelEvaluation(model_trainer_artifact,
-                                               data_split_artifact,
+            model_evaluation = ModelEvaluation(data_split_artifact,
+                                               model_trainer_artifact,
                                                self.model_evaluation_config)
             model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
             logging.info("- "*50)
