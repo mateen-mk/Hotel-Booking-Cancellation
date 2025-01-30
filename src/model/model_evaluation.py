@@ -1,7 +1,5 @@
 import sys
 
-import pandas as pd
-
 from sklearn.metrics import (accuracy_score, 
                              precision_score, 
                              recall_score, 
@@ -32,7 +30,8 @@ class ModelEvaluation:
     Description: Evaluates the trained model using preprocessed data.
     """
 
-    def __init__(self, model_trainer_artifact: ModelTrainerArtifact, 
+    def __init__(self, 
+                 model_trainer_artifact: ModelTrainerArtifact, 
                  data_split_artifact: DataSplitArtifact,
                  model_evaluation_config: ModelEvaluationConfig):
         """
