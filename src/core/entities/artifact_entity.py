@@ -37,6 +37,8 @@ class ModelTrainerArtifact:
     model_object_file_path:str
     model_metrics_file_path:str
 
+
+# Model Metrics Artifact
 @dataclass
 class ModelMetrics:
     accuracy: float
@@ -44,3 +46,5 @@ class ModelMetrics:
     recall_score: float
     f1_score: float
     auc: float
+
+
