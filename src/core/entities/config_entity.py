@@ -48,3 +48,9 @@ class ModelTrainerConfig:
     model_metrics_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, REPORTS_DIR, MODEL_METRICS_DIR)
     model_object_file_path: str = os.path.join(model_object_dir, MODEL_TRAINER_MODEL_OBJECT_NAME)
     model_metrics_file_path: str = os.path.join(model_metrics_dir, MODEL_TRAINER_METRICS_FILE_NAME)
+
+
+# Model Evaluation Configuration
+class ModelEvaluationConfig:
+    evaluation_report_dir: str = os.path.join(from_root(),ARTIFACTS_DIR, REPORTS_DIR, EVALUATION_REPORT_DIR)
+    evaluation_report_file_path: str = os.path.join(evaluation_report_dir, MODEL_EVALUATION_REPORT_FILE_NAME)
