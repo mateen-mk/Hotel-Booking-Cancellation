@@ -2,20 +2,28 @@ import sys
 
 import pandas as pd
 
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report
+from sklearn.metrics import (accuracy_score, 
+                             precision_score, 
+                             recall_score, 
+                             f1_score, 
+                             confusion_matrix, 
+                             classification_report)
 
 from src.core.logger import logging
 from src.core.exception import HotelBookingException
 
 from src.core.entities.config_entity import ModelEvaluationConfig
 from src.core.entities.artifact_entity import (ModelTrainerArtifact, 
-                                                                   DataPreprocessingArtifact, 
-                                                                   ModelEvaluationArtifact)
+                                               DataSplitArtifact,
+                                               ModelEvaluationArtifact)
+
+from src.core.utils.data_utils import read_data
+from src.core.utils.yaml_utils import write_yaml 
+from src.core.utils.object_utils import load_object 
 
 from src.core.constants.common_constant import TARGET_COLUMN
-from src.core.utils.main_utils import (ObjectUtils, 
-                                                             DataUtils,
-                                                             YamlUtils)
+
+
 
 
 class ModelEvaluation:
@@ -25,11 +33,11 @@ class ModelEvaluation:
     """
 
     def __init__(self, model_trainer_artifact: ModelTrainerArtifact, 
-                 data_preprocessing_artifact: DataPreprocessingArtifact, 
+                 data_split_artifact: DataSplitArtifact,
                  model_evaluation_config: ModelEvaluationConfig):
         """
         :param model_trainer_artifact: Trained model artifact.
-        :param data_preprocessing_artifact: Preprocessed data artifact.
+        :param data_split_artifact: Split data artifact.
         :param model_evaluation_config: Configuration for model evaluation.
         """
         try:
@@ -38,7 +46,7 @@ class ModelEvaluation:
             logging.info("- "*50)
 
             self.model_trainer_artifact = model_trainer_artifact
-            self.data_preprocessing_artifact = data_preprocessing_artifact
+            self.data_split_artifact = data_split_artifact
             self.model_evaluation_config = model_evaluation_config
 
         except Exception as e:
@@ -55,8 +63,8 @@ class ModelEvaluation:
         try:
             # Load preprocessed data
             logging.info("Loading preprocessed data.")
-            data_path = self.data_preprocessing_artifact.train_data_file_path
-            df = DataUtils.read_data(file_path=data_path)
+            data_path = self.data_split_artifact.train_data_file_path
+            df = read_data(file_path=data_path)
             logging.info("Successfully loaded preprocessed data.")
 
             # Split features and target
@@ -66,8 +74,8 @@ class ModelEvaluation:
 
             # Load trained model
             logging.info("Loading the trained model.")
-            model_path = self.model_trainer_artifact.trained_model_file_path
-            model = ObjectUtils.load_object(file_path=model_path)
+            model_path = self.model_trainer_artifact.model_object_file_path
+            model = load_object(file_path=model_path)
             logging.info("Successfully loaded the trained model.")
 
             # Generate predictions
@@ -106,14 +114,15 @@ class ModelEvaluation:
             metrics = self.evaluate_model()
 
             # Save evaluation metrics
-            evaluation_report_path = self.model_evaluation_config.evaluation_report_file_path
-            logging.info(f"Saving evaluation report to: {evaluation_report_path}")
-            YamlUtils.write_yaml_file(file_path=evaluation_report_path, content=metrics)
+            logging.info(f"Saving evaluation report to: {self.model_evaluation_config.evaluation_report_file_path}")
+            evaluation_metrics = vars(metrics)
+
+            write_yaml(file_path=self.model_evaluation_config.evaluation_report_file_path, content=evaluation_metrics)
             logging.info("Evaluation report saved successfully.")
 
             # Prepare artifact
             model_evaluation_artifact = ModelEvaluationArtifact(
-                evaluation_report_file_path=evaluation_report_path
+                evaluation_report_file_path=self.model_evaluation_config.evaluation_report_file_path
             )
             logging.info("ModelEvaluationArtifact created successfully.")
             return model_evaluation_artifact
