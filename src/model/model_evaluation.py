@@ -33,9 +33,9 @@ class ModelEvaluation:
         :param model_evaluation_config: Configuration for model evaluation.
         """
         try:
-            logging.info("_" * 100)
-            logging.info("\n| | Started Model Evaluation Stage:")
-            logging.info("- " * 50)
+            logging.info("")
+            logging.info("- - - Started Model Evaluation Stage: - - -")
+            logging.info("- "*50)
 
             self.model_trainer_artifact = model_trainer_artifact
             self.data_preprocessing_artifact = data_preprocessing_artifact
