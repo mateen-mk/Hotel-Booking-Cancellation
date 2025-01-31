@@ -2,9 +2,11 @@
 
 import os
 import sys
+
 import json
 
 from src.core.exception import HotelBookingException
+
 
 
 # Function for reading JSON file from provided path
