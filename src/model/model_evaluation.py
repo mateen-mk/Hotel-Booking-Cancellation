@@ -16,8 +16,9 @@ from src.core.entities.artifact_entity import (ModelTrainerArtifact,
                                                ModelEvaluationArtifact)
 
 from src.core.utils.data_utils import read_data
-from src.core.utils.yaml_utils import write_yaml 
-from src.core.utils.object_utils import load_object 
+from src.core.utils.json_utils import write_json 
+from src.core.utils.object_utils import load_object
+from src.core.utils.train_test_split_utils import separate_features_and_target 
 
 from src.core.constants.common_constant import TARGET_COLUMN
 
@@ -62,19 +63,17 @@ class ModelEvaluation:
         try:
             # Load preprocessed data
             logging.info("Loading preprocessed data.")
-            data_path = self.data_split_artifact.train_data_file_path
-            df = read_data(file_path=data_path)
+            df = read_data(self.data_split_artifact.train_data_file_path)
             logging.info("Successfully loaded preprocessed data.")
 
-            # Split features and target
-            target_column = TARGET_COLUMN
-            X = df.drop(columns=[target_column], axis=1)
-            y = df[target_column]
+            # Separate training data into X and y
+            logging.info("Seperating training data into X and y.")
+            X, y = separate_features_and_target(df, TARGET_COLUMN)
+            logging.info("Successfully separated training data into X and y.")
 
             # Load trained model
             logging.info("Loading the trained model.")
-            model_path = self.model_trainer_artifact.model_object_file_path
-            model = load_object(file_path=model_path)
+            model = load_object(self.model_trainer_artifact.model_object_file_path)
             logging.info("Successfully loaded the trained model.")
 
             # Generate predictions
@@ -114,9 +113,8 @@ class ModelEvaluation:
 
             # Save evaluation metrics
             logging.info(f"Saving evaluation report to: {self.model_evaluation_config.evaluation_report_file_path}")
-            evaluation_metrics = vars(metrics)
 
-            write_yaml(file_path=self.model_evaluation_config.evaluation_report_file_path, content=evaluation_metrics)
+            write_json(file_path=self.model_evaluation_config.evaluation_report_file_path, data=metrics)
             logging.info("Evaluation report saved successfully.")
 
             # Prepare artifact
