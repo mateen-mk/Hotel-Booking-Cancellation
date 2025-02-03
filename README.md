@@ -22,9 +22,3 @@ The goal of this project is to develop a machine learning model that predicts th
 - modify src/model/model_trainer.py for training the model
 - go through every local import of `model_trainer.py`, if something missing then create it accordingly.
 - for `predictor.py`, use both approaches for preprocessing the data (preprocessor.pkl and function approach)
-
-
-
-
-Contribution: 2025-01-27 20:09
-
