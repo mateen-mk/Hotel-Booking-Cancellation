@@ -96,3 +96,7 @@ make git-push msg="your message"
 The changes will be pushed to the `main` branch.
 
 ---
+
+
+
+Update this setup.md
