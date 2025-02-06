@@ -31,6 +31,7 @@ def run_pipe() -> None:
                                                                     data_split_artifact=data_split_artifact)
         model_evaluation_artifact = model_pipeline.start_model_evaluation(data_split_artifact=data_split_artifact,
                                                                           model_trainer_artifact=model_trainer_artifact)
+        model_validation_artifact = model_pipeline.start_model_validation(model_evaluation_artifact=model_evaluation_artifact)
         
         logging.info("")
         logging.info("$ Exited run_pipe method of run_pipe.py script:")
