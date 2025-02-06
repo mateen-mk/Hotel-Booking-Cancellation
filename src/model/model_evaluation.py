@@ -63,7 +63,7 @@ class ModelEvaluation:
         try:
             # Load preprocessed data
             logging.info("Loading preprocessed data.")
-            df = read_data(self.data_split_artifact.train_data_file_path)
+            df = read_data(self.data_split_artifact.test_data_file_path)
             logging.info("Successfully loaded preprocessed data.")
 
             # Separate training data into X and y
