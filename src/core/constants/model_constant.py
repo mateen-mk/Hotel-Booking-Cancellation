@@ -4,3 +4,5 @@ MODEL_TRAINER_METRICS_FILE_NAME: str = "metrics.yaml"
 
 # Model Evaluation related constants
 MODEL_EVALUATION_REPORT_FILE_NAME: str = "report.json"
+
+# Model Validation related constants
