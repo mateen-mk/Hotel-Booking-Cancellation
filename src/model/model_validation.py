@@ -1,5 +1,4 @@
 import sys
-import json
 
 from src.core.logger import logging
 from src.core.exception import HotelBookingException
