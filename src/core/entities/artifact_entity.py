@@ -52,3 +52,9 @@ class ModelMetrics:
 @dataclass
 class ModelEvaluationArtifact:
     evaluation_report_file_path: str
+
+
+# Model Validator Artifact
+@dataclass
+class ModelValidationArtifact:
+    validation_status: bool
