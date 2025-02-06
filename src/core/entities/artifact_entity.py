@@ -58,3 +58,4 @@ class ModelEvaluationArtifact:
 @dataclass
 class ModelValidationArtifact:
     validation_status: bool
+    validation_msg: str
