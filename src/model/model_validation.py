@@ -83,11 +83,18 @@ class ModelValidation:
             validation_status = self.validate_metrics(report=report)
 
             if validation_status:
-                logging.info("Model validation completed successfully.")
+                validation_msg = "Model validation completed successfully."
+                logging.info(validation_msg)
             else:
-                logging.error("Model validation failed.")
+                validation_msg = "Model validation failed."
+                logging.error(validation_msg)
 
-            return validation_status
+            model_validation_artifact = ModelValidationArtifact(
+                validation_status=validation_status,
+                validation_msg=validation_msg
+            )
+
+            return model_validation_artifact
 
         except Exception as e:
             logging.error(f"Error in initiate_validation: {str(e)}")
