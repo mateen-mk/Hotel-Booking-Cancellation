@@ -16,8 +16,7 @@ from src.core.constants.common_constant import EXPECTED_ACCURACY
 
 class ModelValidation:
     def __init__(self,
-                 model_evaluation_artifact: ModelEvaluationArtifact,
-                 model_validation_config: ModelValidationConfig):
+                 model_evaluation_artifact: ModelEvaluationArtifact):
         """
         Initialize the ModelValidation class.
 
