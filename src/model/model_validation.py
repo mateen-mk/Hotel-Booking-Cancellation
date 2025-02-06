@@ -10,11 +10,15 @@ from src.core.entities.artifact_entity import (ModelEvaluationArtifact,
 
 from src.core.utils.json_utils import read_json
 
+from src.core.constants.common_constant import EXPECTED_ACCURACY
+
 
 
 
 class ModelValidation:
-    def __init__(self, report_path: str = "artifacts/reports/metrics/report.json"):
+    def __init__(self,
+                 model_evaluation_artifact: ModelEvaluationArtifact,
+                 model_validation_config: ModelValidationConfig):
         """
         Initialize the ModelValidation class.
 
@@ -25,36 +29,13 @@ class ModelValidation:
             logging.info("- - - Started Model Validation Process - - -")
             logging.info("- " * 50)
 
-            self.report_path = report_path
+            self.model_evaluation_artifact = model_evaluation_artifact
+            self.model_validation_config = model_validation_config
 
         except Exception as e:
             logging.error(f"Error during ModelValidation initialization: {str(e)}")
             raise HotelBookingException(f"Error during ModelValidation initialization: {str(e)}", sys) from e
 
-    def load_report(self) -> dict:
-        """
-        Load the model evaluation report from the specified path.
-
-        :return: Dictionary containing the evaluation metrics.
-        """
-        try:
-            logging.info(f"Loading model evaluation report from {self.report_path}.")
-            with open(self.report_path, "r") as file:
-                report = json.load(file)
-                logging.info("Model evaluation report loaded successfully.")
-                return report
-
-        except FileNotFoundError:
-            logging.error(f"Report file not found at {self.report_path}.")
-            raise HotelBookingException(f"Report file not found at {self.report_path}.", sys)
-
-        except json.JSONDecodeError:
-            logging.error("Failed to decode the report JSON file.")
-            raise HotelBookingException("Failed to decode the report JSON file.", sys)
-
-        except Exception as e:
-            logging.error(f"Error in load_report: {str(e)}")
-            raise HotelBookingException(f"Error in load_report: {str(e)}", sys) from e
 
     def validate_metrics(self, report: dict) -> bool:
         """
@@ -66,8 +47,8 @@ class ModelValidation:
         try:
             logging.info("Validating model evaluation metrics.")
 
-            # Example validation: Check if accuracy is above the threshold
-            accuracy_threshold = 0.8
+            # Check if accuracy is above the threshold
+            accuracy_threshold = EXPECTED_ACCURACY
             accuracy = report.get("accuracy", None)
 
             if accuracy is None:
@@ -96,7 +77,10 @@ class ModelValidation:
             logging.info("Starting model validation process.")
 
             # Load the evaluation report
-            report = self.load_report()
+            logging.info(f"Loading model evaluation report from {self.model_evaluation_artifact.evaluation_report_file_path}.")
+            report = read_json(self.model_evaluation_artifact.evaluation_report_file_path)
+            logging.info("Model evaluation report loaded successfully.")
+
 
             # Validate metrics
             validation_status = self.validate_metrics(report=report)
