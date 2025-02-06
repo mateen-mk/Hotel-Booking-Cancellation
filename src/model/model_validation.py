@@ -28,7 +28,6 @@ class ModelValidation:
             logging.info("- " * 50)
 
             self.model_evaluation_artifact = model_evaluation_artifact
-            self.model_validation_config = model_validation_config
 
         except Exception as e:
             logging.error(f"Error during ModelValidation initialization: {str(e)}")
