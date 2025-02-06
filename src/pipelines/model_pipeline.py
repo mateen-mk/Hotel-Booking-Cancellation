@@ -10,10 +10,12 @@ from src.core.entities.config_entity import (ModelTrainerConfig,
 from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
                                                DataSplitArtifact,
                                                ModelTrainerArtifact,
-                                               ModelEvaluationArtifact)
+                                               ModelEvaluationArtifact,
+                                               ModelValidationArtifact)
 
 from src.model.model_trainer import ModelTrainer
 from src.model.model_evaluation import ModelEvaluation
+from src.model.model_validation import ModelValidation
 
 
 
@@ -92,3 +94,27 @@ class ModelPipeline:
             raise HotelBookingException(f"Error in start_model_evaluation: {str(e)}",sys) from e
         
         
+    def start_model_validation(self,
+                               model_evaluation_artifact) -> ModelValidationArtifact:
+        """
+        This method of ModelPipeline class is responsible for starting model validation component
+        """
+        try:
+            logging.info("_"*100)
+            logging.info("")
+            logging.info("! ! ! Entered start_model_validation method of ModelPipeline Class:")
+            
+            model_validation = ModelValidation(model_evaluation_artifact)
+            model_validation_artifact = model_validation.initiate_model_validation()
+            logging.info("- "*50)
+            logging.info("- - - Model Validated Successfully! - - -")
+
+            logging.info("")
+            logging.info("! ! ! Exited the start_model_validation method of ModelPipeline class:")
+            logging.info("_"*100)
+
+            return model_validation_artifact
+        
+        except Exception as e:
+            logging.error(f"Error in start_model_evaluation: {str(e)}")
+            raise HotelBookingException(f"Error in start_model_evaluation: {str(e)}",sys) from e
