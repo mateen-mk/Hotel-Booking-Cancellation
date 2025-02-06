@@ -28,8 +28,14 @@ def read_json(file_path: str) -> dict:
         with open(file_path, "r") as json_file:
             return json.load(json_file)
 
+    except FileNotFoundError:
+        raise HotelBookingException(f"Report file not found at {file_path}.", sys)
+
+    except json.JSONDecodeError:
+        raise HotelBookingException("Failed to decode the report JSON file.", sys)
+
     except Exception as e:
-        raise HotelBookingException(e, sys) from e
+        raise HotelBookingException(f"Error in load_report: {str(e)}", sys) from e
     
 
 # Function to write JSON file to provided path
