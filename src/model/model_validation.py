@@ -63,7 +63,7 @@ class ModelValidation:
             logging.error(f"Error in validate_metrics: {str(e)}")
             raise HotelBookingException(f"Error in validate_metrics: {str(e)}", sys) from e
 
-    def initiate_validation(self) -> bool:
+    def initiate_model_validation(self) -> bool:
         """
         Initiate the model validation process.
 
