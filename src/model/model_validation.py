@@ -1,8 +1,14 @@
-import json
 import sys
+import json
 
 from src.core.logger import logging
 from src.core.exception import HotelBookingException
+
+from src.core.entities.config_entity import ModelValidationConfig
+from src.core.entities.artifact_entity import (ModelEvaluationArtifact,
+                                               ModelValidationArtifact)
+
+
 
 
 class ModelValidation:
