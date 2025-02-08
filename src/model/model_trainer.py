@@ -187,8 +187,8 @@ class ModelTrainer:
             
             if best_model_config:
                 
-                best_model_name = best_model_config["best_model"]["name"]
-                best_params = best_model_config["best_model"]["params"]
+                best_model_name = best_model_config["name"]
+                best_params = best_model_config["params"]
                 logging.info(f"Using pre-tuned best model: {best_model_name} with parameters: {best_params}")
 
                 
