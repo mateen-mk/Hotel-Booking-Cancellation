@@ -34,7 +34,7 @@ class DataSplitArtifact:
 @dataclass
 class ModelTrainerArtifact:
     model_object_file_path: str
-    model_metrics_file_path: str
+    best_model_metrics_file_path: str
 
 
 # Model Metrics Artifact
