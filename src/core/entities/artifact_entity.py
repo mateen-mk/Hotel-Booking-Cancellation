@@ -28,7 +28,6 @@ class DataPreprocessingArtifact:
 class DataSplitArtifact:
     train_data_file_path: str
     test_data_file_path: str
-    validation_data_file_path: str 
 
 
 # Model Trainer Artifact
