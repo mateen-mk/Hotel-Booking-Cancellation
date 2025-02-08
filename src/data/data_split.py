@@ -13,8 +13,7 @@ from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
 from src.core.utils.data_utils import (read_data, save_data)
 from src.core.utils.train_test_split_utils import split_into_train_test_val
 
-from src.core.constants.common_constant import (TEST_SET_SPLIT_RATIO, 
-                                                VALIDATION_SET_SPLIT_RATIO)
+from src.core.constants.common_constant import TEST_SET_SPLIT_RATIO
 
 
 
@@ -64,20 +63,18 @@ class DataSplit:
 
             # Perform train-test-validation split using utility
             logging.info("Performing train-test-validation split.")
-            train_data, test_data, validation_data = split_into_train_test_val(data, TEST_SET_SPLIT_RATIO, VALIDATION_SET_SPLIT_RATIO)
+            train_data, test_data = split_into_train_test_val(data, TEST_SET_SPLIT_RATIO)
 
 
             # Logging the dataset sizes
             logging.info(f"\tTrain data size: {len(train_data)}")
             logging.info(f"\tTest data size: {len(test_data)}")
-            logging.info(f"\tValidation data size: {len(validation_data)}")
 
 
             # Save split data using utility function
             logging.info("Saving split data to respective paths.")
             os.makedirs(os.path.dirname(self.data_split_config.train_data_file_path), exist_ok=True)
             os.makedirs(os.path.dirname(self.data_split_config.test_data_file_path), exist_ok=True)
-            os.makedirs(os.path.dirname(self.data_split_config.validation_data_file_path), exist_ok=True)
 
 
             save_data(train_data, self.data_split_config.train_data_file_path)
@@ -86,15 +83,11 @@ class DataSplit:
             save_data(test_data, self.data_split_config.test_data_file_path)
             logging.info(f"Testing data saved at {self.data_split_config.test_data_file_path}.")
 
-            save_data(validation_data, self.data_split_config.validation_data_file_path)
-            logging.info(f"Validation data saved at {self.data_split_config.validation_data_file_path}.")
-
 
             # Return DataSplitArtifact
             data_split_artifact = DataSplitArtifact(
                 train_data_file_path=self.data_split_config.train_data_file_path,
-                test_data_file_path=self.data_split_config.test_data_file_path,
-                validation_data_file_path=self.data_split_config.validation_data_file_path
+                test_data_file_path=self.data_split_config.test_data_file_path
             )
             logging.info(f"Data Split artifact: {data_split_artifact}")
 
