@@ -18,12 +18,12 @@ from src.core.exception import HotelBookingException
 from src.core.entities.config_entity import ModelTrainerConfig
 from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
                                                DataSplitArtifact,
-                                               ModelTrainerArtifact, 
-                                               ModelMetrics)
+                                               ModelTrainerArtifact)
 
 from src.core.utils.data_utils import read_data 
 from src.core.utils.object_utils import save_object
 from src.core.utils.yaml_utils import (read_yaml, write_yaml)
+from src.core.utils.json_utils import (read_json, write_json)
 from src.core.utils.train_test_split_utils import (train_test_split_for_tuning,
                                                    separate_features_and_target)
 
@@ -108,6 +108,7 @@ class ModelTrainer:
 
             # Dictionary to store best models after tuning
             best_models = {}
+            best_params_dict = {}
 
             # Loop through each model and its parameters for tuning
             for model_name, model_info in models.items():
@@ -132,6 +133,7 @@ class ModelTrainer:
 
                 # Save the best model
                 best_models[model_name] = search.best_estimator_
+                best_params_dict[model_name] = search.best_params_
 
                 # Print best parameters and best score
                 print(f"Best parameters for {model_name}: {search.best_params_}")
@@ -141,7 +143,7 @@ class ModelTrainer:
 
             logging.info("Hyperparameter tuning completed successfully")
 
-            return best_models
+            return best_models, best_params_dict
 
         except Exception as e:
             raise HotelBookingException(e, sys) from e
