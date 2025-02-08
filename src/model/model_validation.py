@@ -56,7 +56,7 @@ class ModelValidation:
                 logging.error(f"Model accuracy ({accuracy}) is below the threshold ({accuracy_threshold}).")
                 return False
 
-            logging.info("Model accuracy validation passed.")
+            logging.info(f"Model accuracy validation passed. Accuracy: {accuracy}")
             return True
 
         except Exception as e:
