@@ -9,7 +9,7 @@ load_dotenv()
 # Common Constants
 TARGET_COLUMN: str = 'is_canceled'
 VALIDATION_REPORT_SPLIT_RATIO: float = 0.2
-TEST_SET_SPLIT_RATIO: float = 0.3
+TEST_SET_SPLIT_RATIO: float = 0.25
 VALIDATION_SET_SPLIT_RATIO: float = 0.5
 EXPECTED_ACCURACY: float = 0.8
 SCHEMA_FILE_PATH = os.path.join("settings", "schema.yaml")
