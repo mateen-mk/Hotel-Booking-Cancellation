@@ -30,7 +30,6 @@ def split_into_train_test_val(dataframe: pd.DataFrame, test_size: float) -> tupl
             shuffle=True
         )
 
-
         return train_data, test_data
     
     except Exception as e:
