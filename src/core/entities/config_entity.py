@@ -39,7 +39,6 @@ class DataSplitConfig:
     splitted_data_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, DATA_DIR, SPLITTED_DATA_DIR)
     train_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_TRAIN_FILE)
     test_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_TEST_FILE)
-    validation_data_file_path: str = os.path.join(splitted_data_dir, DATA_SPLIT_VALIDATION_FILE)
 
 
 # Model Trainer Configuration
