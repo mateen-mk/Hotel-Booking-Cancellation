@@ -187,8 +187,8 @@ class ModelTrainer:
             
             if best_model_config:
                 
-                best_model_name = self.model_config["best_model"]("name")
-                best_params = self.model_config["best_model"]["params"]
+                best_model_name = best_model_config["best_model"]["name"]
+                best_params = best_model_config["best_model"]["params"]
                 logging.info(f"Using pre-tuned best model: {best_model_name} with parameters: {best_params}")
 
                 
@@ -255,8 +255,8 @@ class ModelTrainer:
                     "name": final_best_model_name,
                     "params": final_best_params
                 }
-                write_json(self.model_trainer_config.best_model_metrics_file_path, self.model_config)
-                logging.info(f"Updated model configuration with best model: {self.model_config['best_model']}")
+                write_json(self.model_trainer_config.best_model_metrics_file_path, best_model_config)
+                logging.info(f"Saved best model configuration to {self.model_trainer_config.best_model_metrics_file_path}: {best_model_config}")
 
 
             # Wrap the trained model in a HotelBookingModel and save it
