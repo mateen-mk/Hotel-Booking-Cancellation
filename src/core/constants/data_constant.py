@@ -14,4 +14,3 @@ DATA_PREPROCESSING_OBJECT_FILE: str = 'preprocessor.pkl'
 # Data Split constants
 DATA_SPLIT_TRAIN_FILE: str = "train.csv"
 DATA_SPLIT_TEST_FILE: str = "test.csv"
-DATA_SPLIT_VALIDATION_FILE: str = "val.csv"

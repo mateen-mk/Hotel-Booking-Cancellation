@@ -54,6 +54,8 @@ class ModelTrainer:
             self.data_preprocessing_artifact = data_preprocessing_artifact
             self.data_split_artifact = data_split_artifact
             self.model_trainer_config = model_trainer_config
+            self.model_config = read_yaml(MODEL_PARAMS_FILE_PATH)
+
 
         except Exception as e:
             logging.error(f"Error in ModelTrainer initialization: {str(e)}")
@@ -99,9 +101,8 @@ class ModelTrainer:
 
 
             # Load model configuration
-            model_config = read_yaml(MODEL_PARAMS_FILE_PATH)
-            models = model_config['model_selection']
-            grid_search_params = model_config['grid_search']['params']
+            models = self.model_config['model_selection']
+            grid_search_params = self.model_config['grid_search']['params']
             logging.info("Model configurations and hyperparameter grids loaded successfully")
 
 
