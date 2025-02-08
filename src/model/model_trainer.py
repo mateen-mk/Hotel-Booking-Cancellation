@@ -21,8 +21,8 @@ from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
                                                ModelTrainerArtifact)
 
 from src.core.utils.data_utils import read_data 
+from src.core.utils.yaml_utils import read_yaml
 from src.core.utils.object_utils import save_object
-from src.core.utils.yaml_utils import (read_yaml, write_yaml)
 from src.core.utils.json_utils import (read_json, write_json)
 from src.core.utils.train_test_split_utils import (train_test_split_for_tuning,
                                                    separate_features_and_target)
@@ -54,6 +54,7 @@ class ModelTrainer:
             self.data_preprocessing_artifact = data_preprocessing_artifact
             self.data_split_artifact = data_split_artifact
             self.model_trainer_config = model_trainer_config
+            # Load the full model configuration from YAML
             self.model_config = read_yaml(MODEL_PARAMS_FILE_PATH)
 
 
@@ -175,8 +176,16 @@ class ModelTrainer:
             logging.info(f"X_test set size: {X_test.shape}, y_test set size: {y_test.shape}")
 
 
-            # Check if a best_model configuration already exists
-            if "best_model" in self.model_config:
+            # Check if best model configuration exists in best_model.json
+            try:
+                best_model_config = read_json(self.model_trainer_config.best_model_metrics_file_path)  # NEW: Try loading best_model.json
+                logging.info(f"Loaded best model configuration from {self.model_trainer_config.best_model_metrics_file_path}: {best_model_config}")
+            except Exception as e:
+                logging.info(f"Best model configuration not found in {self.model_trainer_config.best_model_metrics_file_path}: {str(e)}")
+                best_model_config = None
+                
+            
+            if best_model_config:
                 
                 best_model_name = self.model_config["best_model"]("name")
                 best_params = self.model_config["best_model"]["params"]
@@ -242,13 +251,11 @@ class ModelTrainer:
 
 
                 # Update the configuration with the best model parameters without removing previous content
-                self.model_config.update({
-                    "best_model": {
-                        "name": final_best_model_name,
-                        "params": final_best_params
-                    }
-                })
-                write_yaml(MODEL_PARAMS_FILE_PATH, self.model_config)
+                best_model_config = {
+                    "name": final_best_model_name,
+                    "params": final_best_params
+                }
+                write_json(self.model_trainer_config.best_model_metrics_file_path, self.model_config)
                 logging.info(f"Updated model configuration with best model: {self.model_config['best_model']}")
 
 
@@ -260,7 +267,7 @@ class ModelTrainer:
 
             model_trainer_artifact = ModelTrainerArtifact(
                 model_object_file_path=self.model_trainer_config.model_object_file_path,
-                model_metrics_file_path=self.model_trainer_config.model_metrics_file_path
+                best_model_metrics_file_path=self.model_trainer_config.best_model_metrics_file_path
             )
             logging.info(f"Model trainer artifact created: {model_trainer_artifact}")
             
