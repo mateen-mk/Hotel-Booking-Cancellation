@@ -162,63 +162,98 @@ class ModelTrainer:
             logging.info(f"X_train set size: {X_train.shape}, y_train set size: {y_train.shape}")
 
 
-            # Load validation data
+            # Load test data
             test_df = read_data(self.data_split_artifact.test_data_file_path)
             logging.info(f"Loaded preprocessed validation data from: {self.data_split_artifact.test_data_file_path}")
             logging.info(f"Validation Data shape: {test_df.shape}")
 
-            # Separate Validaton data into X and y
+            # Separate test data into X and y
             X_test, y_test = separate_features_and_target(test_df, TARGET_COLUMN)
             logging.info("Seperate Validaton data into X and y completed successfully")
             logging.info(f"X_test set size: {X_test.shape}, y_test set size: {y_test.shape}")
 
 
-            # Tune hyperparameters and get best models
-            best_models = self.tune_hyperparameters(X_train, y_train)
+            # Check if a best_model configuration already exists
+            if "best_model" in self.model_config:
+                
+                best_model_name = self.model_config["best_model"]("name")
+                best_params = self.model_config["best_model"]["params"]
+                logging.info(f"Using pre-tuned best model: {best_model_name} with parameters: {best_params}")
+
+                
+                # Determine the model class based on best_model_name (extend logic as needed)
+                if best_model_name.lower() == "rfc":
+                    model_module = importlib.import_module("sklearn.ensemble")
+                    model_class = getattr(model_module, "RandomForestClassifier")
+                
+                elif best_model_name.lower() == "dtc":
+                    model_module = importlib.import_module("sklearn.tree")
+                    model_class = getattr(model_module, "DecisionTreeClassifier")
+                
+                elif best_model_name.lower() == "gb":
+                    model_module = importlib.import_module("sklearn.ensemble")
+                    model_class = getattr(model_module, "GradientBoostingClassifier")
+                
+                elif best_model_name.lower() == "xgb":
+                    model_module = importlib.import_module("xgboost")
+                    model_class = getattr(model_module, "XGBClassifier")
+                
+                else:
+                    raise HotelBookingException(f"Best model {best_model_name} not supported.", sys)
+
+                
+                best_model = model_class(**best_params)
+                logging.info("Training model using fixed best model configuration...")
+                best_model.fit(X_train, y_train)
+
+            else:
+                
+                logging.info("No best model configuration found; proceeding with hyperparameter tuning.")
+                best_models, best_params_dict = self.tune_hyperparameters(X_train, y_train)
+                
+
+                best_model = None
+                best_recall = 0
+                final_best_model_name = None
+                final_best_params = None
+                
+
+                # Evaluate the best model
+                logging.info("Evaluating tuned models on the validation set")
+                for model_name, model in best_models.items():
+                    logging.info(f"Evaluating model: {model_name}")
+                    
+                    result = self.metrics_calculator(model, X_test, y_test, model_name)
+                    recall = float(result.loc['Recall (Class 1)'].values[0].replace('%', ''))
+                    
+                    if recall > best_recall:
+                        logging.info(f"Model {model_name} has recall: {recall}%")
+                        
+                        best_recall = recall
+                        best_model = model
+                        final_best_model_name = model_name
+                        final_best_params = best_params_dict[model_name]
 
 
-            # Evaluate models
-            best_model = None
-            best_recall = 0
-            metrics_artifact = None
+                if best_model is None:
+                    raise HotelBookingException("No suitable model found.", sys)
 
 
-            logging.info("Evaluating models on the test set")
-            for model_name, model in best_models.items():
-                logging.info(f"Evaluating model: {model_name}")
+                # Update the configuration with the best model parameters without removing previous content
+                self.model_config.update({
+                    "best_model": {
+                        "name": final_best_model_name,
+                        "params": final_best_params
+                    }
+                })
+                write_yaml(MODEL_PARAMS_FILE_PATH, self.model_config)
+                logging.info(f"Updated model configuration with best model: {self.model_config['best_model']}")
 
-                result = self.metrics_calculator(model, X_test, y_test, model_name)
-                recall = float(result.loc['Recall (Class 1)'].values[0].replace('%', ''))
 
-
-                if recall > best_recall:
-                    logging.info(f"Model {model_name} has recall: {recall}%")
-
-                    best_recall = recall
-                    best_model = model
-                    metrics_artifact = ModelMetrics(
-                        accuracy=float(result.loc['Accuracy'].values[0].replace('%', '')),
-                        precision_score=float(result.loc['Precision (Class 1)'].values[0].replace('%', '')),
-                        recall_score=recall,
-                        f1_score=float(result.loc['F1-score (Class 1)'].values[0].replace('%', '')),
-                        auc=float(result.loc['AUC (Class 1)'].values[0].replace('%', ''))
-                    )
-
-            if best_model is None:
-                raise HotelBookingException("No suitable model found.", sys)
-            
-
-            # Save the best model
-            # preprocessing_obj = load_object(file_path=self.data_preprocessing_artifact.preprocessed_object_file_path)
+            # Wrap the trained model in a HotelBookingModel and save it
             hotel_booking_model = HotelBookingModel(trained_model_object=best_model)
             save_object(file_path=self.model_trainer_config.model_object_file_path, obj=hotel_booking_model)
             logging.info("Best model saved successfully")
-
-
-            # Save the best metrics
-            model_metrics = vars(metrics_artifact)
-            write_yaml(self.model_trainer_config.model_metrics_file_path, model_metrics)
-            logging.info("Best metrics saved successfully")
 
 
             model_trainer_artifact = ModelTrainerArtifact(
@@ -226,8 +261,94 @@ class ModelTrainer:
                 model_metrics_file_path=self.model_trainer_config.model_metrics_file_path
             )
             logging.info(f"Model trainer artifact created: {model_trainer_artifact}")
-
+            
             return model_trainer_artifact
 
         except Exception as e:
             raise HotelBookingException(e, sys) from e
+
+
+
+    # def initiate_model_trainer(self) -> ModelTrainerArtifact:
+    #     logging.info("Starting model training process...")
+    #     try:
+    #         # Load training data
+    #         train_df = read_data(self.data_split_artifact.train_data_file_path)
+    #         logging.info(f"Loaded preprocessed training data from: {self.data_split_artifact.train_data_file_path}")
+    #         logging.info(f"Training Data shape: {train_df.shape}")
+
+    #         # Separate training data into X and y
+    #         X_train, y_train = separate_features_and_target(train_df, TARGET_COLUMN)
+    #         logging.info("Seperate Training data into X and y completed successfully")
+    #         logging.info(f"X_train set size: {X_train.shape}, y_train set size: {y_train.shape}")
+
+
+    #         # Load test data
+    #         test_df = read_data(self.data_split_artifact.test_data_file_path)
+    #         logging.info(f"Loaded preprocessed validation data from: {self.data_split_artifact.test_data_file_path}")
+    #         logging.info(f"Validation Data shape: {test_df.shape}")
+
+    #         # Separate test data into X and y
+    #         X_test, y_test = separate_features_and_target(test_df, TARGET_COLUMN)
+    #         logging.info("Seperate Validaton data into X and y completed successfully")
+    #         logging.info(f"X_test set size: {X_test.shape}, y_test set size: {y_test.shape}")
+
+
+    #         # Tune hyperparameters and get best models
+    #         best_models = self.tune_hyperparameters(X_train, y_train)
+
+
+    #         # Evaluate models
+    #         best_model = None
+    #         best_recall = 0
+    #         metrics_artifact = None
+
+
+    #         logging.info("Evaluating models on the test set")
+    #         for model_name, model in best_models.items():
+    #             logging.info(f"Evaluating model: {model_name}")
+
+    #             result = self.metrics_calculator(model, X_test, y_test, model_name)
+    #             recall = float(result.loc['Recall (Class 1)'].values[0].replace('%', ''))
+
+
+    #             if recall > best_recall:
+    #                 logging.info(f"Model {model_name} has recall: {recall}%")
+
+    #                 best_recall = recall
+    #                 best_model = model
+    #                 metrics_artifact = ModelMetrics(
+    #                     accuracy=float(result.loc['Accuracy'].values[0].replace('%', '')),
+    #                     precision_score=float(result.loc['Precision (Class 1)'].values[0].replace('%', '')),
+    #                     recall_score=recall,
+    #                     f1_score=float(result.loc['F1-score (Class 1)'].values[0].replace('%', '')),
+    #                     auc=float(result.loc['AUC (Class 1)'].values[0].replace('%', ''))
+    #                 )
+
+    #         if best_model is None:
+    #             raise HotelBookingException("No suitable model found.", sys)
+            
+
+    #         # Save the best model
+    #         # preprocessing_obj = load_object(file_path=self.data_preprocessing_artifact.preprocessed_object_file_path)
+    #         hotel_booking_model = HotelBookingModel(trained_model_object=best_model)
+    #         save_object(file_path=self.model_trainer_config.model_object_file_path, obj=hotel_booking_model)
+    #         logging.info("Best model saved successfully")
+
+
+    #         # Save the best metrics
+    #         model_metrics = vars(metrics_artifact)
+    #         write_yaml(self.model_trainer_config.model_metrics_file_path, model_metrics)
+    #         logging.info("Best metrics saved successfully")
+
+
+    #         model_trainer_artifact = ModelTrainerArtifact(
+    #             model_object_file_path=self.model_trainer_config.model_object_file_path,
+    #             model_metrics_file_path=self.model_trainer_config.model_metrics_file_path
+    #         )
+    #         logging.info(f"Model trainer artifact created: {model_trainer_artifact}")
+
+    #         return model_trainer_artifact
+
+    #     except Exception as e:
+    #         raise HotelBookingException(e, sys) from e
