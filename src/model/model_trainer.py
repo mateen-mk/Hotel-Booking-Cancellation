@@ -22,8 +22,8 @@ from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
                                                ModelMetrics)
 
 from src.core.utils.data_utils import read_data 
+from src.core.utils.object_utils import save_object
 from src.core.utils.yaml_utils import (read_yaml, write_yaml)
-from src.core.utils.object_utils import (load_object, save_object)
 from src.core.utils.train_test_split_utils import (train_test_split_for_tuning,
                                                    separate_features_and_target)
 
