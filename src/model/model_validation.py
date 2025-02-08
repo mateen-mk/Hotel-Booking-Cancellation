@@ -92,6 +92,7 @@ class ModelValidation:
                 validation_status=validation_status,
                 validation_msg=validation_msg
             )
+            logging.info(f"Model Validation artifact created: {model_validation_artifact}")
 
             return model_validation_artifact
 
