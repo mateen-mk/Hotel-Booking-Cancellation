@@ -9,35 +9,29 @@ from src.core.exception import HotelBookingException
 
 
 
-# split data into three datasets train, test and validation datasets
+# split data into two datasets, train and test datasets
 @staticmethod
-def split_into_train_test_val(dataframe: pd.DataFrame, test_size: float, validation_size: float) -> tuple:
+def split_into_train_test_val(dataframe: pd.DataFrame, test_size: float) -> tuple:
     """
     Method Name: split_data
     Description :   Splits the given DataFrame into three datasets: train, test, and validation.
     
-    Input       :   dataframe      -> The input DataFrame (train/test).
+    Input       :   dataframe       -> The input DataFrame (train/test).
+                :   test_size       -> The size of the test dataset in floating point format (0.25) 25% of the whole dataframe.
     
-    Output      :   tuple         -> A tuple containing the training DataFrame, the testing DataFrame, and the validation DataFrame.
+    Output      :   tuple           -> A tuple containing the training DataFrame and the testing DataFrame.
     """ 
     try:
-        # Split into train and remaining (test + validation)
-        train_data, temp_data = train_test_split(
+        # Split into train and test data
+        train_data, test_data = train_test_split(
             dataframe, 
-            test_size=test_size,  # 30% for test + validation
+            test_size=test_size,  
             random_state=12, 
             shuffle=True
         )
 
-        # Split remaining into test and validation
-        test_data, validation_data = train_test_split(
-            temp_data, 
-            test_size=validation_size,  # Split 30% into 50% test and 50% validation
-            random_state=12, 
-            shuffle=True
-        )
 
-        return train_data, test_data, validation_data
+        return train_data, test_data
     
     except Exception as e:
         raise HotelBookingException(f"Error in split_data: {str(e)}", sys) from e
@@ -50,10 +44,10 @@ def separate_features_and_target(dataframe: pd.DataFrame, target_column: str) ->
     Method Name :   separate_features_and_target
     Description :   Separates independent features and dependent (target) feature from the DataFrame.
     
-    Input       :   df            -> The input DataFrame (train/test).
-                target_column  -> The name of the target column in the DataFrame.
+    Input       :   df              -> The input DataFrame (train/test).
+                :   target_column   -> The name of the target column in the DataFrame.
     
-    Output      :   tuple         -> A tuple containing the independent features DataFrame and the target feature series.
+    Output      :   tuple           -> A tuple containing the independent features DataFrame and the target feature series.
     """
     try:        
         # Separating independent features (X) and target feature (y)
