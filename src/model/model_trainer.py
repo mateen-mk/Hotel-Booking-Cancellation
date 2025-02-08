@@ -189,6 +189,11 @@ class ModelTrainer:
                 
                 best_model_name = best_model_config["name"]
                 best_params = best_model_config["params"]
+                
+                # Convert class_weight keys from strings to integers if present
+                if "class_weight" in best_params:
+                    best_params["class_weight"] = {int(k): v for k, v in best_params["class_weight"].items()}
+
                 logging.info(f"Using pre-tuned best model: {best_model_name} with parameters: {best_params}")
 
                 
@@ -216,6 +221,7 @@ class ModelTrainer:
                 best_model = model_class(**best_params)
                 logging.info("Training model using fixed best model configuration...")
                 best_model.fit(X_train, y_train)
+                chosen_model_name = best_model_name 
 
             else:
                 
@@ -257,6 +263,14 @@ class ModelTrainer:
                 }
                 write_json(self.model_trainer_config.best_model_metrics_file_path, best_model_config)
                 logging.info(f"Saved best model configuration to {self.model_trainer_config.best_model_metrics_file_path}: {best_model_config}")
+
+
+            # Calculate metrics for the chosen model and log/print them
+            logging.info("Calculating final evaluation metrics for the selected model...")
+            final_metrics = self.metrics_calculator(best_model, X_test, y_test, chosen_model_name)
+            
+            logging.info(f"Final evaluation metrics for {chosen_model_name}: {final_metrics.to_dict()}")
+            print(f"Final evaluation metrics for {chosen_model_name}:\n{final_metrics}")
 
 
             # Wrap the trained model in a HotelBookingModel and save it
