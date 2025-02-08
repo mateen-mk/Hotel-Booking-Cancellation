@@ -44,9 +44,9 @@ class DataSplitConfig:
 # Model Trainer Configuration
 class ModelTrainerConfig:
     model_object_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, OBJECTS_DIR, MODEL_OBJECT_DIR)
-    model_metrics_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, REPORTS_DIR, MODEL_METRICS_DIR)
+    best_model_metrics_dir: str = os.path.join(from_root(), ARTIFACTS_DIR, REPORTS_DIR, BEST_MODEL_METRICS_DIR)
     model_object_file_path: str = os.path.join(model_object_dir, MODEL_TRAINER_MODEL_OBJECT_NAME)
-    model_metrics_file_path: str = os.path.join(model_metrics_dir, MODEL_TRAINER_METRICS_FILE_NAME)
+    best_model_metrics_file_path: str = os.path.join(best_model_metrics_dir, MODEL_TRAINER_BEST_MODEL_METRICS_NAME)
 
 
 # Model Evaluation Configuration
