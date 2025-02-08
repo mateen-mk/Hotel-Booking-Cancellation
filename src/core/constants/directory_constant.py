@@ -14,7 +14,7 @@ SPLITTED_DATA_DIR: str = 'splitted'
 
 # Sub-Reports Directory constants
 VALIDATION_REPORT_DIR: str = 'validation'
-MODEL_METRICS_DIR: str = 'metrics'
+BEST_MODEL_METRICS_DIR: str = 'metrics'
 EVALUATION_REPORT_DIR: str = 'evaluation'
 
 # Sub-Objects Directory constants
