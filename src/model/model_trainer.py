@@ -163,14 +163,14 @@ class ModelTrainer:
 
 
             # Load validation data
-            val_df = read_data(self.data_split_artifact.validation_data_file_path)
-            logging.info(f"Loaded preprocessed validation data from: {self.data_split_artifact.validation_data_file_path}")
-            logging.info(f"Validation Data shape: {val_df.shape}")
+            test_df = read_data(self.data_split_artifact.test_data_file_path)
+            logging.info(f"Loaded preprocessed validation data from: {self.data_split_artifact.test_data_file_path}")
+            logging.info(f"Validation Data shape: {test_df.shape}")
 
             # Separate Validaton data into X and y
-            X_val, y_val = separate_features_and_target(val_df, TARGET_COLUMN)
+            X_test, y_test = separate_features_and_target(test_df, TARGET_COLUMN)
             logging.info("Seperate Validaton data into X and y completed successfully")
-            logging.info(f"X_val set size: {X_val.shape}, y_val set size: {y_val.shape}")
+            logging.info(f"X_test set size: {X_test.shape}, y_test set size: {y_test.shape}")
 
 
             # Tune hyperparameters and get best models
@@ -187,7 +187,7 @@ class ModelTrainer:
             for model_name, model in best_models.items():
                 logging.info(f"Evaluating model: {model_name}")
 
-                result = self.metrics_calculator(model, X_val, y_val, model_name)
+                result = self.metrics_calculator(model, X_test, y_test, model_name)
                 recall = float(result.loc['Recall (Class 1)'].values[0].replace('%', ''))
 
 
