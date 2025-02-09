@@ -37,28 +37,6 @@ A **machine learning-powered pipeline** that:
 
 ---
 
-## 💡 Key Features
-
-- **Data Ingestion & Validation**  
-  📥 Automatically fetches and validates raw booking data from a MySQL database.
-  
-- **Data Preprocessing**  
-  🔍 Cleans and transforms data (handles missing values, encoding, normalization) for accurate predictions.
-  
-- **Model Training & Evaluation**  
-  🏋️‍♂️ Trains multiple models with hyperparameter tuning to select the best performer, and evaluates them using robust metrics.
-  
-- **Model Deployment**  
-  🌐 Deploys the trained model via an interactive web application (using Flask/Streamlit) for real-time predictions.
-  
-- **MLOps Integration**  
-  🔧 Implements versioning, monitoring (data drift, performance), and automated workflows for continuous improvement.
-  
-- **Interactive Notebooks**  
-  📊 Jupyter notebooks document every stage of the pipeline with visualizations and detailed analyses.
-
----
-
 ## 🗂️ Project Structure
 
 ```plaintext
