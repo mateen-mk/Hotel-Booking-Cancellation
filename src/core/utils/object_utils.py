@@ -2,6 +2,7 @@ import os
 import sys
 
 import dill
+from streamlit import cache_resource
 
 from src.core.exception import HotelBookingException
 
@@ -28,7 +29,7 @@ def save_object(file_path: str, obj: object) -> None:
         raise HotelBookingException(e, sys) from e
     
 
-@staticmethod
+@cache_resource(allow_output_mutation=True)
 def load_object(file_path: str) -> object:
     """
     Load an object from a file using the dill module.
