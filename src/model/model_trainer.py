@@ -288,8 +288,8 @@ class ModelTrainer:
 
             model_trainer_artifact = ModelTrainerArtifact(
                 model_object_file_path=self.model_trainer_config.model_object_file_path,
-                best_model_metrics_file_path=self.model_trainer_config.best_model_metrics_file_path,
-                best_model_params_file_path=self.model_trainer_config.best_model_params_file_path
+                best_model_params_file_path=self.model_trainer_config.best_model_params_file_path,
+                best_model_metrics_file_path=self.model_trainer_config.best_model_metrics_file_path
             )
             logging.info(f"Model trainer artifact created: {model_trainer_artifact}")
             
