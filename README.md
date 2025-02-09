@@ -305,8 +305,6 @@ flowchart TD
 
 - **Mateen Khan** ✨
 
----
-
 For any questions, suggestions, or project inquiries, please feel free to reach out at [mateenmk2428@gmail.com](mailto:mateenmk2428@gmail.com) or connect on my [LinkedIn](https://www.linkedin.com/in/mateenmk).
 
 **Made with ❤️ for stress-free hotel management!**  
