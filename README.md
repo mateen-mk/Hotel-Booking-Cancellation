@@ -168,6 +168,46 @@ We analyzed **100,000+ bookings** to uncover trends, some of them are following:
 
 ---
 
+## 🔍 How It Works
+
+1. **Data Pipeline:**  
+   The system automatically ingests raw data, validates it, preprocesses it, and splits it into training, testing, and validation sets.
+
+2. **Model Pipeline:**  
+   Models are trained using hyperparameter tuning. Once the best model (e.g., Random Forest) is identified, its configuration is saved in a separate JSON file for future runs. Evaluation metrics are computed and stored, ensuring transparency and reproducibility.
+
+3. **MLOps & Deployment:**  
+   The trained model is deployed via a web application (built using Flask/Streamlit) for real-time predictions. Continuous monitoring, logging, and versioning ensure that the model remains effective over time.
+
+```mermaid
+flowchart TD
+    %% Data Pipeline %%
+    subgraph Data Pipeline
+        A[Data Ingestion 📥] --> B[Data Validation 🔍]
+        B --> C[Data Preprocessing 🧹]
+        C --> D[Data Splitting 🔀]
+    end
+
+    %% Model Pipeline %%
+    subgraph Model Pipeline
+        D --> E[Model Training 🏋️‍♂️]
+        E --> F[Model Evaluation 📊]
+        F --> G[Model Validation ✅]
+    end
+
+    %% Orchestration %%
+    H[run_pipe.py Orchestration ⚙️] --> A
+    H --> B
+    H --> C
+    H --> D
+    H --> E
+    H --> F
+    H --> G
+```
+
+---
+
+
 ## 🛠️ **Getting Started**  
 ### **Prerequisites**  
 - Python 3.10+ 🐍  
@@ -193,7 +233,7 @@ python main.py  # Trains models and generates artifacts!
 ---
 
 ## 🧩 **Technologies Used**  
-- **Backend**: Python
+- **Backend**: Python 🐍
 - **Database**: MySQL
 - **Data Processing**: Pandas, NumPy  
 - **Data Versioning**: DVC
@@ -211,8 +251,13 @@ python main.py  # Trains models and generates artifacts!
 
 ---
 
-## 👥 **Contributors**  
-- **Your Name** 👩💻 - [LinkedIn](https://linkedin.com/in/yourprofile) | [Email](mailto:you@example.com)  
+## 🤝 Contributors
+
+- **Mateen Khan** ✨
+
+---
+
+For any questions, suggestions, or project inquiries, please feel free to reach out at [mateenmk2428@gmail.com](mailto:mateenmk2428@gmail.com) or connect on my [LinkedIn](https://www.linkedin.com/in/mateenmk).
 
 **Made with ❤️ for stress-free hotel management!**  
 
