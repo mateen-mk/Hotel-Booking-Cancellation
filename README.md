@@ -249,6 +249,10 @@ flowchart TD
 
 ---
 
+##  **Prerequisites**  
+- Python 3.8+ 🐍  
+- MySQL (for raw data) 🗃️ 
+---
 
 ## 🚀 How to Run
 
