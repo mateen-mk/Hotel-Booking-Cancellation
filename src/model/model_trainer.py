@@ -54,7 +54,7 @@ class ModelTrainer:
             self.data_preprocessing_artifact = data_preprocessing_artifact
             self.data_split_artifact = data_split_artifact
             self.model_trainer_config = model_trainer_config
-            # Load the full model configuration from YAML
+            # Load the full model parameters from YAML
             self.model_config = read_yaml(MODEL_PARAMS_FILE_PATH)
 
 
@@ -101,10 +101,10 @@ class ModelTrainer:
             logging.info(f"Tuning dataset size: {X_tune.shape}, {y_tune.shape}")
 
 
-            # Load model configuration
+            # Load model parameters
             models = self.model_config['model_selection']
             grid_search_params = self.model_config['grid_search']['params']
-            logging.info("Model configurations and hyperparameter grids loaded successfully")
+            logging.info("Model parameters and hyperparameter grids loaded successfully")
 
 
             # Dictionary to store best models after tuning
@@ -167,8 +167,8 @@ class ModelTrainer:
 
             # Load test data
             test_df = read_data(self.data_split_artifact.test_data_file_path)
-            logging.info(f"Loaded preprocessed validation data from: {self.data_split_artifact.test_data_file_path}")
-            logging.info(f"Validation Data shape: {test_df.shape}")
+            logging.info(f"Loaded preprocessed Test data from: {self.data_split_artifact.test_data_file_path}")
+            logging.info(f"Test Data shape: {test_df.shape}")
 
             # Separate test data into X and y
             X_test, y_test = separate_features_and_target(test_df, TARGET_COLUMN)
@@ -176,19 +176,19 @@ class ModelTrainer:
             logging.info(f"X_test set size: {X_test.shape}, y_test set size: {y_test.shape}")
 
 
-            # Check if best model configuration exists in best_model.json
+            # Check if best model parameters exists in best_model.json
             try:
-                best_model_config = read_json(self.model_trainer_config.best_model_metrics_file_path)  # NEW: Try loading best_model.json
-                logging.info(f"Loaded best model configuration from {self.model_trainer_config.best_model_metrics_file_path}: {best_model_config}")
+                best_model_params = read_json(self.model_trainer_config.best_model_params_file_path)  # NEW: Try loading best_model.json
+                logging.info(f"Loaded best model parameters from {self.model_trainer_config.best_model_params_file_path}: {best_model_params}")
             except Exception as e:
-                logging.info(f"Best model configuration not found in {self.model_trainer_config.best_model_metrics_file_path}: {str(e)}")
-                best_model_config = None
+                logging.info(f"Best model parameters not found in {self.model_trainer_config.best_model_params_file_path}: {str(e)}")
+                best_model_params = None
                 
             
-            if best_model_config:
+            if best_model_params:
                 
-                best_model_name = best_model_config["name"]
-                best_params = best_model_config["params"]
+                best_model_name = best_model_params["name"]
+                best_params = best_model_params["params"]
                 
                 # Convert class_weight keys from strings to integers if present
                 if "class_weight" in best_params:
@@ -219,13 +219,28 @@ class ModelTrainer:
 
                 
                 best_model = model_class(**best_params)
-                logging.info("Training model using fixed best model configuration...")
+                logging.info("Training model using fixed best model parameters...")
                 best_model.fit(X_train, y_train)
-                chosen_model_name = best_model_name 
+
+
+                # Calculate metrics for the chosen model and convert it to dict format
+                logging.info("Calculating final evaluation metrics for the selected model...")
+                final_best_metrics = self.metrics_calculator(best_model, X_test, y_test, best_model_name).to_dict()
+
+
+                # Save the best model metrics in json format
+                best_model_metrics = {
+                    "name": best_model_name,
+                    "params": final_best_metrics
+                }
+
+                write_json(self.model_trainer_config.best_model_metrics_file_path, best_model_metrics)
+                logging.info(f"Saved best model parameters to {self.model_trainer_config.best_model_metrics_file_path}:\n {best_model_metrics}")
+                print(f"Best Model Metrics for {best_model_name}:\n{best_model_metrics}")
 
             else:
                 
-                logging.info("No best model configuration found; proceeding with hyperparameter tuning.")
+                logging.info("No best model parameters found; proceeding with hyperparameter tuning.")
                 best_models, best_params_dict = self.tune_hyperparameters(X_train, y_train)
                 
 
@@ -256,21 +271,13 @@ class ModelTrainer:
                     raise HotelBookingException("No suitable model found.", sys)
 
 
-                # Update the configuration with the best model parameters without removing previous content
-                best_model_config = {
+                # Save the best parameters in json format
+                best_model_params = {
                     "name": final_best_model_name,
                     "params": final_best_params
                 }
-                write_json(self.model_trainer_config.best_model_metrics_file_path, best_model_config)
-                logging.info(f"Saved best model configuration to {self.model_trainer_config.best_model_metrics_file_path}: {best_model_config}")
-
-
-            # Calculate metrics for the chosen model and log/print them
-            logging.info("Calculating final evaluation metrics for the selected model...")
-            final_metrics = self.metrics_calculator(best_model, X_test, y_test, chosen_model_name)
-            
-            logging.info(f"Final evaluation metrics for {chosen_model_name}: {final_metrics.to_dict()}")
-            print(f"Final evaluation metrics for {chosen_model_name}:\n{final_metrics}")
+                write_json(self.model_trainer_config.best_model_params_file_path, best_model_params)
+                logging.info(f"Saved best model parameters to {self.model_trainer_config.best_model_params_file_path}: {best_model_params}")
 
 
             # Wrap the trained model in a HotelBookingModel and save it
@@ -281,7 +288,8 @@ class ModelTrainer:
 
             model_trainer_artifact = ModelTrainerArtifact(
                 model_object_file_path=self.model_trainer_config.model_object_file_path,
-                best_model_metrics_file_path=self.model_trainer_config.best_model_metrics_file_path
+                best_model_metrics_file_path=self.model_trainer_config.best_model_metrics_file_path,
+                best_model_params_file_path=self.model_trainer_config.best_model_params_file_path
             )
             logging.info(f"Model trainer artifact created: {model_trainer_artifact}")
             
