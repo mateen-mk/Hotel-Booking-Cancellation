@@ -1,14 +1,23 @@
 # 🏨 Hotel Booking Cancellation Prediction System 🌟  
 
 <div align="center">
-  <img src="notebooks/figures/EDA/Cancellation_status.png" alt="Cancellation Analysis" width="400"/>
-  <img src="notebooks/figures/model_training/model_comparison/Accuracy.png" alt="Model Accuracy" width="400"/>
+  <img src="https://5.imimg.com/data5/EF/GO/MY-17287433/hotel-bookings-500x500.jpg" alt="Hotel Banner" width="1000"/><br>
+
+*Empowering hotels to predict cancellations and optimize their operations!*
 </div>
 
 ---
 
 ## 📖 **Overview**  
+The **Hotel Booking Cancellation Prediction System** is an end-to-end machine learning solution designed to forecast whether a hotel booking will be canceled. This system helps hotels improve revenue management, streamline operations, and plan resources effectively. It uses historical booking data to train models that predict cancellations, and it comes with a robust, modular pipeline that covers every step from data ingestion to model deployment.
+
+---
+
 **❓ Problem Statement**  
+<div align="center">
+  <img src="notebooks/figures/EDA/Cancellation_status.png" alt="Cancellation Analysis"/>
+</div>
+
 Hotels face significant challenges due to last-minute booking cancellations 🚫, leading to revenue loss and inefficient resource management. This system predicts whether a booking will be canceled, empowering hotels to optimize pricing 🏷️, staffing 👥, and inventory 📦.  
 
 **✨ Solution**  
@@ -24,28 +33,123 @@ A **machine learning-powered pipeline** that:
 - **Smart Preprocessing** 🧹: Handles missing values, outliers, and data drift.  
 - **Model Zoo** 🤖: Trains and compares 5+ ML models (Random Forest, XGBoost, etc.).  
 - **Visual Reports** 📈: Interactive charts for decision-makers.  
-- **One-Click Deployment** 🚢: Docker and Flask/Streamlit support.  
+- **One-Click Deployment** 🚢: Docker and Streamlit support.  
 
 ---
 
-## 🗂️ **Project Structure**  
+## 📖 Overview
+
+The **Hotel Booking Cancellation Prediction System** is an end-to-end machine learning solution designed to forecast whether a hotel booking will be canceled. This system helps hotels improve revenue management, streamline operations, and plan resources effectively. It uses historical booking data to train models that predict cancellations, and it comes with a robust, modular pipeline that covers every step from data ingestion to model deployment.
+
+---
+
+## ❓ Problem Statement
+
+Hotel cancellations can significantly impact revenue and operational planning. By predicting cancellations in advance, hotels can:
+- **Optimize room inventory**  
+- **Improve dynamic pricing strategies**  
+- **Enhance resource allocation**
+
+This project provides a comprehensive solution that tackles these challenges using modern machine learning and MLOps practices.
+
+---
+
+## 💡 Key Features
+
+- **Data Ingestion & Validation**  
+  📥 Automatically fetches and validates raw booking data from a MySQL database.
+  
+- **Data Preprocessing**  
+  🔍 Cleans and transforms data (handles missing values, encoding, normalization) for accurate predictions.
+  
+- **Model Training & Evaluation**  
+  🏋️‍♂️ Trains multiple models with hyperparameter tuning to select the best performer, and evaluates them using robust metrics.
+  
+- **Model Deployment**  
+  🌐 Deploys the trained model via an interactive web application (using Flask/Streamlit) for real-time predictions.
+  
+- **MLOps Integration**  
+  🔧 Implements versioning, monitoring (data drift, performance), and automated workflows for continuous improvement.
+  
+- **Interactive Notebooks**  
+  📊 Jupyter notebooks document every stage of the pipeline with visualizations and detailed analyses.
+
+---
+
+## 🗂️ Project Structure
+
 ```plaintext
-.
-├── 📁 artifacts/              # Auto-generated data & models (not tracked in GitHub)
-│   ├── 📁 data/               # Processed datasets
-│   └── 📁 objects/            # Saved models & preprocessors
+
+├── 📁 artifacts/                   # Auto-generated artifacts (ignored in Git)
+│   ├── 📁 data/                    # Datasets
+│   │   ├── 📁 interim/             # Interim data (e.g., data.csv)
+│   │   ├── 📁 processed/           # Preprocessed data (e.g., processed.csv)
+│   │   ├── 📁 raw/                 # Raw data (e.g., raw.csv)
+│   │   └── 📁 splitted/            # Train, test splits (train.csv, test.csv)
+│   ├── 📁 objects/                 # Saved objects & models
+│   │   ├── 📁 model/               # Trained model (model.pkl)
+│   │   └── 📁 preprocessor/        # Preprocessing object (preprocessor.pkl)
+│   └── 📁 reports/                 # Evaluation, metrics, and drift reports
+│       ├── 📁 evaluation/          # Model evaluation reports (report.json)
+│       ├── 📁 metrics/             # Metrics files (metrics.json)
+│       ├── 📁 params/              # Hyperparameter configurations (params.json)
+│       └── 📁 validation/          # Data validation reports (drift_report.yaml)
 │
-├── 📁 notebooks/              # Jupyter notebooks with step-by-step analysis
-│   ├── 📁 figures/            # Charts & graphs (like the ones above!)
-│   └── 📘 01-fetch_data.ipynb # Data fetching demo
+├── 📁 docs/                        # Documentation
+│   ├── 📄 api.md                   # API documentation
+│   ├── 📄 architecture.md          # System architecture
+│   ├── 📄 project_plan.md          # Project planning & roadmap
+│   ├── 📄 setup.md                 # Setup instructions
+│   └── 📄 workflow.md              # Detailed workflow description
 │
-├── 📁 src/                    # Core Python code
-│   ├── 📁 pipelines/          # Training & prediction workflows
-│   └── 📁 model/              # ML model training logic
+├── 📁 logs/                        # Log files for debugging and monitoring
 │
-├── 📁 docs/                   # Project documentation
-├── 📝 requirements.txt        # Dependencies
-└── ⚙️ main.py                # Run the system here!
+├── 📁 notebooks/                   # Jupyter notebooks for experimentation
+│   ├── 📁 figures/                 # Visualizations & charts
+│   │   ├── 📁 data_preprocessing/  # Figures for data preprocessing
+│   │   ├── 📁 EDA/                 # Exploratory Data Analysis figures
+│   │   └── 📁 model_training/      # Figures from model training (feature importance, model comparison)
+│   ├── 📘 01-fetch_data.ipynb      # Data fetching demonstration
+│   ├── 📘 02-EDA.ipynb             # Exploratory Data Analysis
+│   ├── 📘 03-data_preprocessing.ipynb  # Data preprocessing steps
+│   ├── 📘 04-model_building.ipynb  # Model training and evaluation
+│   └── 📘 trails.ipynb             # Additional experiments
+│
+├── 📁 settings/                    # Configuration files
+│   ├── ⚙️ model.yaml               # Model settings and hyperparameters
+│   └── ⚙️ schema.yaml              # Data schema definition
+│
+├── 📁 src/                         # Source code
+│   ├── 📁 configs/                # Configuration related code (e.g., MySQL connection)
+│   ├── 📁 core/                   # Core utilities, logger, exceptions, constants, etc.
+│   │   ├── 📁 constants/           # Constants to use throughout the project
+│   │   ├── 📁 entities/            # Entities (artifact_entities, config_entities)
+│   │   ├── 📁 exceptions/          # Custom exceptions
+│   │   ├── 📁 logger/              # Custom Logging 
+│   │   └── 📁 utils/               # General utility functions
+│   ├── 📁 data/                   # Data ingestion, preprocessing, validation, etc.
+│   │   ├── 📜 data_ingestion.py    # Data ingestion script
+│   │   ├── 📜 data_preprocessing.py  # Data preprocessing script
+│   │   ├── 📜 data_split.py        # Data Splitting script (train, test)
+│   │   └── 📜 data_validation.py   # Data validation script
+│   ├── 📁 mlops/                  # MLOps scripts (monitoring, deployment, versioning, CI/CD)
+│   ├── 📁 model/                  # Model training, evaluation, prediction, validation
+│   │   ├── 📜 model_evaluation.py  # Model Evaluation script
+│   │   ├── 📜 model_trainer.py     # Model Training script
+│   │   ├── 📜 model_validation.py  # Model Validation script
+│   │   └── 📜 predictor.py         # Model Prediction script
+│   └── 📁 pipelines/              # Workflow orchestration for data & model pipelines
+│       ├── 📜 data_pipeline.py     # Data Pipeline to Handle src/data/ scripts
+│       ├── 📜 model_pipeline.py    # Model Pipeline to Handle src/model/ scripts
+│       └── 📜 run_pipe.py          # Workflow orchestration for data & model pipelines
+│
+├── 📁 tests/                       # Unit and integration tests
+│
+├── ⚙️ main.py                     # Main entry point to run the pipeline
+├── 📄 Makefile                    # Build and automation commands
+├── 📄 LICENSE
+├── 📄 README.md                   # Project documentation (this file)
+└── 📄 requirements.txt            # Python dependencies
 ```
 
 > **Note**: The `artifacts` folder (auto-generated files) is excluded via `.gitignore`.
@@ -55,9 +159,11 @@ A **machine learning-powered pipeline** that:
 ## 🔍 **Exploratory Data Analysis (EDA)**  
 We analyzed **100,000+ bookings** to uncover trends:  
 - 🗺️ **Guest Origins**: Most guests come from Portugal and Europe.  
-  ![Country Distribution](notebooks/figures/EDA/Country_wise_guests.png)<br>
-- 📅 **Booking Patterns**:
-  ![Monthly Distribution](notebooks/figures/EDA/Guest_distribution_over_month.png)  
+  ![Country Distribution](notebooks/figures/EDA/Country_wise_guests.png)
+
+- 📅 **Booking Patterns**: 
+  ![Monthly Distribution](notebooks/figures/EDA/Guest_distribution_over_month.png)
+
 - 💰 **Pricing Insights**:
   ![Price Trends](notebooks/figures/EDA/Room_price_per_night_over_monts.png)  
 
@@ -65,10 +171,10 @@ We analyzed **100,000+ bookings** to uncover trends:
 
 ## 🤖 **Model Training & Evaluation**  
 ### **Performance Highlights**  
-| Model           | Accuracy | Precision | Recall |
-|-----------------|----------|-----------|--------|
-| Random Forest   |   92%    |    89%    |  85%   |
-| XGBoost         |   91%    |    88%    |  84%   |
+| Model           | Accuracy | Precision | Recall | F1 Score | AUC Score |
+|-----------------|----------|-----------|--------|----------|-----------|
+| Random Forest   |   86%    |    81%    |  80%   |    80%   |    93%    |
+| XGBoost         |   85%    |    84%    |  72%   |    78%   |    91%    |
 
 ![Model Comparison](notebooks/figures/model_training/model_comparison/Accuracy.png)  
 
