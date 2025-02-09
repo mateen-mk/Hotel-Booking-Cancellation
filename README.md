@@ -38,9 +38,10 @@ A **machine learning-powered pipeline** that:
 ---
 
 ## 🗂️ Project Structure
+<details>
+<summary>🔍 Click to expand the folder structure</summary>
 
 ```plaintext
-
 ├── 📁 artifacts/                   # Auto-generated artifacts (ignored in Git)
 │   ├── 📁 data/                    # Datasets
 │   │   ├── 📁 interim/             # Interim data (e.g., data.csv)
@@ -112,6 +113,7 @@ A **machine learning-powered pipeline** that:
 ├── 📄 README.md                   # Project documentation (this file)
 └── 📄 requirements.txt            # Python dependencies
 ```
+</details>
 
 > **Note**: The `artifacts` folder (auto-generated files) is excluded via `.gitignore`.
 
