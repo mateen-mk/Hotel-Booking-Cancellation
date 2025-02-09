@@ -6,7 +6,7 @@
 *Empowering hotels to predict cancellations and optimize their operations!*
 </div>
 
----
+--- 
 
 ## 📖 **Overview**  
 The **Hotel Booking Cancellation Prediction System** is an end-to-end machine learning solution designed to forecast whether a hotel booking will be canceled. This system helps hotels improve revenue management, streamline operations, and plan resources effectively. It uses historical booking data to train models that predict cancellations, and it comes with a robust, modular pipeline that covers every step from data ingestion to model deployment.
@@ -34,23 +34,6 @@ A **machine learning-powered pipeline** that:
 - **Model Zoo** 🤖: Trains and compares 5+ ML models (Random Forest, XGBoost, etc.).  
 - **Visual Reports** 📈: Interactive charts for decision-makers.  
 - **One-Click Deployment** 🚢: Docker and Streamlit support.  
-
----
-
-## 📖 Overview
-
-The **Hotel Booking Cancellation Prediction System** is an end-to-end machine learning solution designed to forecast whether a hotel booking will be canceled. This system helps hotels improve revenue management, streamline operations, and plan resources effectively. It uses historical booking data to train models that predict cancellations, and it comes with a robust, modular pipeline that covers every step from data ingestion to model deployment.
-
----
-
-## ❓ Problem Statement
-
-Hotel cancellations can significantly impact revenue and operational planning. By predicting cancellations in advance, hotels can:
-- **Optimize room inventory**  
-- **Improve dynamic pricing strategies**  
-- **Enhance resource allocation**
-
-This project provides a comprehensive solution that tackles these challenges using modern machine learning and MLOps practices.
 
 ---
 
@@ -157,14 +140,17 @@ This project provides a comprehensive solution that tackles these challenges usi
 ---
 
 ## 🔍 **Exploratory Data Analysis (EDA)**  
-We analyzed **100,000+ bookings** to uncover trends:  
-- 🗺️ **Guest Origins**: Most guests come from Portugal and Europe.  
+We analyzed **100,000+ bookings** to uncover trends, some of them are following:  
+- 🗺️ **Guest Origins**: Most guests come from Portugal and Europe. 
+
   ![Country Distribution](notebooks/figures/EDA/Country_wise_guests.png)
 
 - 📅 **Booking Patterns**: 
+
   ![Monthly Distribution](notebooks/figures/EDA/Guest_distribution_over_month.png)
 
 - 💰 **Pricing Insights**:
+
   ![Price Trends](notebooks/figures/EDA/Room_price_per_night_over_monts.png)  
 
 ---
@@ -176,11 +162,9 @@ We analyzed **100,000+ bookings** to uncover trends:
 | Random Forest   |   86%    |    81%    |  80%   |    80%   |    93%    |
 | XGBoost         |   85%    |    84%    |  72%   |    78%   |    91%    |
 
-![Model Comparison](notebooks/figures/model_training/model_comparison/Accuracy.png)  
+- **Model Comparison**:
 
-### **Why It Works**  
-- **Feature Importance**: Lead time, deposit type, and room price are top predictors.  
-  ![Feature Importance](notebooks/figures/model_training/feature_importance/Random_Forest.png)  
+  ![Model Comparison](notebooks/figures/model_training/model_comparison/Accuracy.png)  
 
 ---
 
