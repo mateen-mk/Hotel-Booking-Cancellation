@@ -149,7 +149,7 @@ We analyzed **100,000+ bookings** to uncover trends, some of them are following:
    Models are trained using hyperparameter tuning. Once the best model (e.g., Random Forest) is identified, its configuration is saved in a separate JSON file for future runs. Evaluation metrics are computed and stored, ensuring transparency and reproducibility.
 
 3. **MLOps & Deployment:**  
-   The trained model is deployed via a web application (built using Flask/Streamlit) for real-time predictions. Continuous monitoring, logging, and versioning ensure that the model remains effective over time.
+   The trained model is deployed via a web application (built using Streamlit) for real-time predictions. Continuous monitoring, logging, and versioning ensure that the model remains effective over time.
 ---
 
 ### **Pipeline Workflow**
