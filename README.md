@@ -90,16 +90,8 @@ A **machine learning-powered pipeline** that:
 │   │   ├── 📁 logger/              # Custom Logging 
 │   │   └── 📁 utils/               # General utility functions
 │   ├── 📁 data/                   # Data ingestion, preprocessing, validation, etc.
-│   │   ├── 📜 data_ingestion.py    # Data ingestion script
-│   │   ├── 📜 data_preprocessing.py  # Data preprocessing script
-│   │   ├── 📜 data_split.py        # Data Splitting script (train, test)
-│   │   └── 📜 data_validation.py   # Data validation script
 │   ├── 📁 mlops/                  # MLOps scripts (monitoring, deployment, versioning, CI/CD)
 │   ├── 📁 model/                  # Model training, evaluation, prediction, validation
-│   │   ├── 📜 model_evaluation.py  # Model Evaluation script
-│   │   ├── 📜 model_trainer.py     # Model Training script
-│   │   ├── 📜 model_validation.py  # Model Validation script
-│   │   └── 📜 predictor.py         # Model Prediction script
 │   └── 📁 pipelines/              # Workflow orchestration for data & model pipelines
 │       ├── 📜 data_pipeline.py     # Data Pipeline to Handle src/data/ scripts
 │       ├── 📜 model_pipeline.py    # Model Pipeline to Handle src/model/ scripts
