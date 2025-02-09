@@ -235,7 +235,6 @@ flowchart TD
     C --> B1
     C --> B2
     C --> B3
-
 ```
 ---
 ### **Explanation**
@@ -298,7 +297,7 @@ flowchart TD
    ```
 5. **Launch the Web Application:**
    ```bash
-   python app.py
+   streamlit run app.py
    ```
 6. **Explore the Notebooks:**  
    Open the Jupyter notebooks in the `notebooks/` folder to see detailed analysis and visualizations.
@@ -337,11 +336,6 @@ For any questions, suggestions, or project inquiries, please feel free to reach 
 **Made with ❤️ for stress-free hotel management!**  
 
 ---
-
-<div align="center">
-  <img src="notebooks/figures/data_preprocessing/heatmap.png" alt="Data Correlation" width="600"/>
-</div>
-
 
 
 
