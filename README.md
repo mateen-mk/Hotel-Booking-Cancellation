@@ -282,8 +282,6 @@ flowchart TD
 
 ---
 
----
-
 ## 🧩 **Technologies Used**  
 - **Backend**: Python 🐍
 - **Database**: MySQL
