@@ -178,57 +178,132 @@ We analyzed **100,000+ bookings** to uncover trends, some of them are following:
 
 3. **MLOps & Deployment:**  
    The trained model is deployed via a web application (built using Flask/Streamlit) for real-time predictions. Continuous monitoring, logging, and versioning ensure that the model remains effective over time.
+---
 
+### **Pipeline Workflow**
+---
 ```mermaid
 flowchart TD
-    %% Data Pipeline %%
-    subgraph Data Pipeline
-        A[Data Ingestion 📥] --> B[Data Validation 🔍]
-        B --> C[Data Preprocessing 🧹]
-        C --> D[Data Splitting 🔀]
+    %% Data Pipeline Subgraph
+    subgraph "📊 Data Pipeline"
+      A1[📥 Data Ingestion]
+      A2[🔍 Data Validation]
+      A3[🧹 Data Preprocessing]
+      A4[🔀 Data Splitting]
+      
+      %% Artifacts for Data Pipeline
+      A1a[Artifacts:<br>artifacts/data/interim/data.csv<br>artifacts/data/raw/raw.csv]
+      A2a[Artifact:<br>artifacts/reports/validation/drift_report.yaml]
+      A3a[Artifacts:<br>artifacts/data/processed/processed.csv<br>artifacts/objects/preprocessor/preprocessor.pkl]
+      A4a[Artifacts:<br>artifacts/data/splitted/test.csv<br>artifacts/data/splitted/train.csv]
+      
+      A1 --> A2
+      A2 --> A3
+      A3 --> A4
+      
+      A1 --- A1a
+      A2 --- A2a
+      A3 --- A3a
+      A4 --- A4a
     end
 
-    %% Model Pipeline %%
-    subgraph Model Pipeline
-        D --> E[Model Training 🏋️‍♂️]
-        E --> F[Model Evaluation 📊]
-        F --> G[Model Validation ✅]
+    %% Model Pipeline Subgraph
+    subgraph "🤖 Model Pipeline"
+      B1[🏋️‍♂️ Model Training]
+      B2[📊 Model Evaluation]
+      B3[✅ Model Validation]
+      
+      %% Artifacts for Model Pipeline
+      B1a[Artifacts:<br>artifacts/objects/model/model.pkl<br>artifacts/reports/metrics/metrics.json<br>artifacts/reports/params/params.json]
+      B2a[Artifact:<br>artifacts/reports/evaluation/report.json]
+      
+      B1 --> B2
+      B2 --> B3
+      
+      B1 --- B1a
+      B2 --- B2a
     end
 
-    %% Orchestration %%
-    H[run_pipe.py Orchestration ⚙️] --> A
-    H --> B
-    H --> C
-    H --> D
-    H --> E
-    H --> F
-    H --> G
+    %% Orchestration Node
+    C[⚙️ run_pipe.py Orchestration]
+
+    %% Connect orchestration to pipelines
+    C --> A1
+    C --> A2
+    C --> A3
+    C --> A4
+    C --> B1
+    C --> B2
+    C --> B3
+
 ```
+---
+### **Explanation**
+---
+- **Data Pipeline:**
+  - **Data Ingestion (📥):** Fetches raw booking data.
+    - **Artifact:** 
+        - `artifacts\data\interim\data.csv`
+        - `artifacts\data\raw\raw.csv`
+
+  - **Data Validation (🔍):** Checks the quality and schema of the data.
+    - **Artifact:**
+        - `artifacts\reports\validation\drift_report.yaml`
+
+  - **Data Preprocessing (🧹):** Cleans and transforms the data.
+    - **Artifact:** 
+        - `artifacts\data\processed\processed.csv`
+        - `artifacts\objects\preprocessor\preprocessor.pkl`
+
+  - **Data Splitting (🔀):** Splits the data into train, test, and validation sets.
+    - **Artifact:** 
+        - `artifacts\data\splitted\test.csv`
+        - `artifacts\data\splitted\train.csv`
+
+- **Model Pipeline:**
+  - **Model Training (🏋️‍♂️):** Uses the preprocessed and split data to train the machine learning model.
+    - **Artifact:** 
+        - `artifacts\objects\model\model.pkl`
+        - `artifacts\reports\metrics\metrics.json`
+        - `artifacts\reports\params\params.json`
+  
+  - **Model Evaluation (📊):** Computes evaluation metrics (accuracy, precision, etc.) to assess model performance.
+    - **Artifact:** 
+        - `artifacts\reports\evaluation\report.json`
+  
+  - **Model Validation (✅):** Ensures the trained model meets predefined performance criteria.
+
+- **Orchestration (⚙️):**
+  - The `run_pipe.py` script orchestrates the entire pipeline by sequentially running both the data and model pipelines.
 
 ---
 
 
-## 🛠️ **Getting Started**  
-### **Prerequisites**  
-- Python 3.10+ 🐍  
-- MySQL (for raw data) 🗃️  
+## 🚀 How to Run
 
-### **Installation**  
-1. Clone the repo:  
+1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/hotel-booking-cancellation.git
-   cd hotel-booking-cancellation
+   git clone https://github.com/mateen-mk/Hotel-Booking-Cancellation.git
+   cd Hotel-Booking-Cancellation
    ```
-2. Install dependencies:  
+2. **Install Dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
-3. Configure `.env` with your database credentials.  
+3. **Configure the Database:**  
+   Update `.env` with your mysql database credentials.
+4. **Run the Pipeline:**
+   ```bash
+   python main.py
+   ```
+5. **Launch the Web Application:**
+   ```bash
+   python app.py
+   ```
+6. **Explore the Notebooks:**  
+   Open the Jupyter notebooks in the `notebooks/` folder to see detailed analysis and visualizations.
 
-### **Run the Pipeline**  
-```bash
-python main.py  # Trains models and generates artifacts!
-```
+---
 
 ---
 
@@ -446,36 +521,9 @@ This project provides a comprehensive solution that tackles these challenges usi
 - **Advanced Monitoring:** Enhance model monitoring with detailed dashboards using tools like MLflow or Grafana.  
 - **Mobile App Interface:** Create a mobile-friendly interface for predictions.
 
----
 
-## 🤝 Contributors
 
-- **Mateen Khan** ✨
 
----
 
-For any questions, suggestions, or project inquiries, please feel free to reach out at [your.email@example.com](mailto:your.email@example.com) or connect on [LinkedIn](https://www.linkedin.com).
 
----
 
-*Thank you for checking out the Hotel Booking Cancellation Prediction System! Let's make hotels smarter, one prediction at a time! 🎉*
-```
-
----
-
-### **Notes:**
-
-- **Emojis & Images:**  
-  - Emojis are used throughout to add personality (e.g., 🏨, 🚀, 📈, 🐍).  
-  - Image placeholders (e.g., `docs/images/hotel_banner.jpg`) should be replaced with actual image paths in your repository. Consider adding a few attractive images in your `docs/images/` folder.
-
-- **Approachable Language:**  
-  The README is written in friendly, non-technical language while still conveying important technical details. This makes it appealing both to non-technical clients and technical collaborators.
-
-- **Freelancer Appeal:**  
-  The README clearly states the problem, solution, and benefits of the project, which is essential when presenting your work to potential clients.
-
-- **Folder Structure:**  
-  The folder structure is fully detailed with emojis to visually separate sections, making it easy for anyone to understand where each component of the project resides.
-
-Feel free to tweak any sections (e.g., contact details, image paths) to match your personal style and project specifics. Enjoy presenting your project!
