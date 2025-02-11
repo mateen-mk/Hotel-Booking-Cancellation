@@ -84,4 +84,3 @@ loyalty to your brand.
 
 **Prepared by:** Mateen Khan <br>
 **Position:** Data Scientist <br>
-**Date:** ___ / ___ / ______
