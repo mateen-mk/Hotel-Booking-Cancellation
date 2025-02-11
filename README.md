@@ -60,7 +60,7 @@ A **machine learning-powered pipeline** that:
 ├── 📁 docs/                        # Documentation
 │   ├── 📄 api.md                   # API documentation
 │   ├── 📄 architecture.md          # System architecture
-│   ├── 📄 project_plan.md          # Project planning & roadmap
+│   ├── 📄 proposal.md              # Client's project proposal
 │   ├── 📄 setup.md                 # Setup instructions
 │   └── 📄 workflow.md              # Detailed workflow description
 │
