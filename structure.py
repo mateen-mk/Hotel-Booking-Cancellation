@@ -41,21 +41,26 @@ list_of_files = [
     # "deployment/docker",
     # "deployment/cloud/__init__.py",
         
-    "logs",
+    "logs/",
 
     "requirements.txt",
     "setup.py",
 ]
 
-# Create directories and files
-for filepath in list_of_files:
-    filepath = Path(filepath)
-    if filepath.suffix == "":  # If it's a directory
-        os.makedirs(filepath, exist_ok=True)
-    else:  # If it's a file
-        filedir, filename = os.path.split(filepath)
-        if filedir:
-            os.makedirs(filedir, exist_ok=True)
-        if not os.path.exists(filepath):
-            with open(filepath, "w") as f:
-                pass
+
+def create_folder_structure():
+    # Create directories and files
+    for filepath in list_of_files:
+        if filepath.endswith("/"):  # Check if it's a directory
+            os.makedirs(filepath, exist_ok=True)
+        else:  # It's a file
+            filepath = Path(filepath)
+            filedir = filepath.parent
+            if filedir:  # Ensure parent directory exists
+                os.makedirs(filedir, exist_ok=True)
+            if not filepath.exists():  # Create the file if it doesn't exist
+                filepath.touch()
+
+if __name__ == '__main__': 
+    create_folder_structure()
+    print("Folder structure created successfully.")
