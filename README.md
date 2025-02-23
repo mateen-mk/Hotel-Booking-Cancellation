@@ -161,58 +161,60 @@ flowchart TD
 
     %% Data Pipeline Subgraph
     subgraph "📊 Data Pipeline"
-      A1["📥 Data Ingestion"]
-      A2["🔍 Data Validation"]
-      A3["🧹 Data Preprocessing"]
-      A4["🔀 Data Splitting"]
+      %% MySQL Connnection Script
+      MC["MySQL Connection"]
+      DI["📥 Data Ingestion"]
+      DV["🔍 Data Validation"]
+      DP["🧹 Data Preprocessing"]
+      DS["🔀 Data Splitting"]
       
       %% Artifacts for Data Pipeline
-      A1a["Artifacts:<br>artifacts/data/interim/data.csv<br>artifacts/data/raw/raw.csv"]
-      A2a["Artifact:<br>artifacts/reports/validation/drift_report.yaml"]
-      A3a["Artifacts:<br>artifacts/data/processed/processed.csv<br>artifacts/objects/preprocessor/preprocessor.pkl"]
-      A4a["Artifacts:<br>artifacts/data/splitted/test.csv<br>artifacts/data/splitted/train.csv"]
+      DIa["Artifacts:<br>artifacts/data/interim/data.csv<br>artifacts/data/raw/raw.csv"]
+      DVa["Artifact:<br>artifacts/reports/validation/drift_report.yaml"]
+      DPa["Artifacts:<br>artifacts/data/processed/processed.csv<br>artifacts/objects/preprocessor/preprocessor.pkl"]
+      DSa["Artifacts:<br>artifacts/data/splitted/test.csv<br>artifacts/data/splitted/train.csv"]
       
-      A1 --> A2
-      A2 --> A3
-      A3 --> A4
+      DI --> DV
+      DV --> DP
+      DP --> DS
       
-      A1 --- A1a
-      A2 --- A2a
-      A3 --- A3a
-      A4 --- A4a
+      DI --- DIa
+      DV --- DVa
+      DP --- DPa
+      DS --- DSa
     end
 
     %% Model Pipeline Subgraph
     subgraph "🤖 Model Pipeline"
-      B1["🏋️‍♂️ Model Training"]
-      B2["📊 Model Evaluation"]
-      B3["✅ Model Validation"]
+      MT["🏋️‍♂️ Model Training"]
+      ME["📊 Model Evaluation"]
+      MV["✅ Model Validation"]
       
       %% Artifacts for Model Pipeline
-      B1a["Artifacts:<br>artifacts/objects/model/model.pkl<br>artifacts/reports/metrics/metrics.json<br>artifacts/reports/params/params.json"]
-      B2a["Artifact:<br>artifacts/reports/evaluation/report.json"]
+      MTa["Artifacts:<br>artifacts/objects/model/model.pkl<br>artifacts/reports/metrics/metrics.json<br>artifacts/reports/params/params.json"]
+      MEa["Artifact:<br>artifacts/reports/evaluation/report.json"]
       
-      B1 --> B2
-      B2 --> B3
+      MT --> ME
+      ME --> MV
       
-      B1 --- B1a
-      B2 --- B2a
+      MT --- MTa
+      ME --- MEa
     end
 
     %% Orchestration Node
     C["⚙️ run_pipe.py Orchestration"]
 
     %% Connect Input to Data Pipeline
-    DB --> A1
+    DB --> DI
 
     %% Connect orchestration to pipelines
-    C --> A1
-    C --> A2
-    C --> A3
-    C --> A4
-    C --> B1
-    C --> B2
-    C --> B3
+    C --> DI
+    C --> DV
+    C --> DP
+    C --> DS
+    C --> MT
+    C --> ME
+    C --> MV
 
 ```
 ---
