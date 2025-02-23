@@ -156,18 +156,21 @@ We analyzed **100,000+ bookings** to uncover trends, some of them are following:
 ---
 ```mermaid
 flowchart TD
+    %% Input Node for Data Ingestion
+    DB["🗄️ MySQL Database"]
+
     %% Data Pipeline Subgraph
     subgraph "📊 Data Pipeline"
-      A1[📥 Data Ingestion]
-      A2[🔍 Data Validation]
-      A3[🧹 Data Preprocessing]
-      A4[🔀 Data Splitting]
+      A1["📥 Data Ingestion"]
+      A2["🔍 Data Validation"]
+      A3["🧹 Data Preprocessing"]
+      A4["🔀 Data Splitting"]
       
       %% Artifacts for Data Pipeline
-      A1a[Artifacts:<br>artifacts/data/interim/data.csv<br>artifacts/data/raw/raw.csv]
-      A2a[Artifact:<br>artifacts/reports/validation/drift_report.yaml]
-      A3a[Artifacts:<br>artifacts/data/processed/processed.csv<br>artifacts/objects/preprocessor/preprocessor.pkl]
-      A4a[Artifacts:<br>artifacts/data/splitted/test.csv<br>artifacts/data/splitted/train.csv]
+      A1a["Artifacts:<br>artifacts/data/interim/data.csv<br>artifacts/data/raw/raw.csv"]
+      A2a["Artifact:<br>artifacts/reports/validation/drift_report.yaml"]
+      A3a["Artifacts:<br>artifacts/data/processed/processed.csv<br>artifacts/objects/preprocessor/preprocessor.pkl"]
+      A4a["Artifacts:<br>artifacts/data/splitted/test.csv<br>artifacts/data/splitted/train.csv"]
       
       A1 --> A2
       A2 --> A3
@@ -181,13 +184,13 @@ flowchart TD
 
     %% Model Pipeline Subgraph
     subgraph "🤖 Model Pipeline"
-      B1[🏋️‍♂️ Model Training]
-      B2[📊 Model Evaluation]
-      B3[✅ Model Validation]
+      B1["🏋️‍♂️ Model Training"]
+      B2["📊 Model Evaluation"]
+      B3["✅ Model Validation"]
       
       %% Artifacts for Model Pipeline
-      B1a[Artifacts:<br>artifacts/objects/model/model.pkl<br>artifacts/reports/metrics/metrics.json<br>artifacts/reports/params/params.json]
-      B2a[Artifact:<br>artifacts/reports/evaluation/report.json]
+      B1a["Artifacts:<br>artifacts/objects/model/model.pkl<br>artifacts/reports/metrics/metrics.json<br>artifacts/reports/params/params.json"]
+      B2a["Artifact:<br>artifacts/reports/evaluation/report.json"]
       
       B1 --> B2
       B2 --> B3
@@ -197,7 +200,10 @@ flowchart TD
     end
 
     %% Orchestration Node
-    C[⚙️ run_pipe.py Orchestration]
+    C["⚙️ run_pipe.py Orchestration"]
+
+    %% Connect Input to Data Pipeline
+    DB --> A1
 
     %% Connect orchestration to pipelines
     C --> A1
@@ -207,6 +213,7 @@ flowchart TD
     C --> B1
     C --> B2
     C --> B3
+
 ```
 ---
 ### **Explanation**
