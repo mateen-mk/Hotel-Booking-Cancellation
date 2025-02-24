@@ -157,7 +157,7 @@ We analyzed **100,000+ bookings** to uncover trends, some of them are following:
 ```mermaid
 flowchart TD
     %% Input Node for Data Ingestion
-    DB["🗄️ MySQL Database"]
+    DB[("🗄️ MySQL Database")]
 
     %% Data Pipeline Subgraph
     subgraph "📊 Data Pipeline"
@@ -167,25 +167,30 @@ flowchart TD
       DV["🔍 Data Validation"]
       DP["🧹 Data Preprocessing"]
       DS["🔀 Data Splitting"]
-      
-      %% Artifacts for Data Pipeline
+
+      DI --> DV
+      DV --> DP
+      DP --> DS
+
+    end
+    %% Artifacts for Data Pipeline
+    subgraph "📊 Artifacts"
       DIa["Artifacts:<br>artifacts/data/interim/data.csv<br>artifacts/data/raw/raw.csv"]
       DVa["Artifact:<br>artifacts/reports/validation/drift_report.yaml"]
       DPa["Artifacts:<br>artifacts/data/processed/processed.csv<br>artifacts/objects/preprocessor/preprocessor.pkl"]
       DSa["Artifacts:<br>artifacts/data/splitted/test.csv<br>artifacts/data/splitted/train.csv"]
-      
-      DI --> DV
-      DV --> DP
-      DP --> DS
-      
-      DI --- DIa
-      DV --- DVa
+    
+      MC ----- DI
+      DI ---- DIa
+      DV ---- DVa
       DP --- DPa
       DS --- DSa
     end
 
     %% Model Pipeline Subgraph
     subgraph "🤖 Model Pipeline"
+
+      MP((" Predictor"))
       MT["🏋️‍♂️ Model Training"]
       ME["📊 Model Evaluation"]
       MV["✅ Model Validation"]
@@ -202,19 +207,26 @@ flowchart TD
     end
 
     %% Orchestration Node
-    C["⚙️ run_pipe.py Orchestration"]
+    RPipe["⚙️ run_pipe.py Orchestration"]
 
     %% Connect Input to Data Pipeline
-    DB --> DI
+    DB ---- MC
+
+    %% Connect Data Pipeline to Data Scripts
+    DPipe@{ shape: procs, label: "📊 Data Pipeline"}
+    DPipe --> DI
+    DPipe --> DV
+    DPipe --> DP
+    DPipe --> DS
+
+    %% Connect Model Pipeline to Model Scripts
+    MPipe["🤖 Model Pipeline"]
+    MPipe --> MT --> MV
+    MPipe --> ME
+    MPipe --> MV
 
     %% Connect orchestration to pipelines
-    C --> DI
-    C --> DV
-    C --> DP
-    C --> DS
-    C --> MT
-    C --> ME
-    C --> MV
+    RPipe ----- DPipe & MPipe
 
 ```
 ---
