@@ -13,3 +13,18 @@ Ensure you have the following software installed on your system:
 - pip (Python package manager)
 
 ---
+
+## **2️⃣ Clone the Repository**
+
+1. Open a terminal and navigate to the directory where you want to store the project.
+2. Clone the repository using the following command:
+   ```bash
+   git clone https://github.com/mateen-mk/Hotel-Booking-Cancellation.git
+   ```
+3. Navigate to the project folder:
+   ```bash
+   cd Hotel-Booking-Cancellation
+   ```
+
+---
+
