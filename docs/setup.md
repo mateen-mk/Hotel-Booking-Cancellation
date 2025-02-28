@@ -66,3 +66,24 @@ pip install -r requirements.txt
 
 ---
 
+## **6️⃣ Understand the Project Structure**
+
+Here is an overview of the project folder structure:
+
+```plaintext
+├── config/
+│   └── schema.yaml        # Dataset schema definition
+├── docs/
+│   └── setup.md           # Project setup instructions
+├── src/
+│   ├── preprocess.py      # Data preprocessing scripts
+│   ├── train.py           # Model training script
+├── tests/                 # Unit tests for the project
+├── requirements.txt       # Python dependencies
+├── Makefile               # Automation commands
+└── .env                   # Environment variables
+```
+
+---
+
+
