@@ -87,3 +87,12 @@ Here is an overview of the project folder structure:
 ---
 
 
+## **9️⃣ Push Code to Git**
+
+You can use the `Makefile` to commit and push code changes. Run:
+```bash
+make git-push msg="your message"
+```
+The changes will be pushed to the `main` branch.
+
+---
