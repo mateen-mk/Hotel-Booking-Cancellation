@@ -28,3 +28,20 @@ Ensure you have the following software installed on your system:
 
 ---
 
+## **3️⃣ Set Up Virtual Environment**
+
+1. Create a virtual environment:
+   ```bash
+   python -m venv .venv
+   ```
+2. Activate the virtual environment:
+   - **Windows**:
+     ```bash
+     .venv\Scripts\activate
+     ```
+   - **Mac/Linux**:
+     ```bash
+     source .venv/bin/activate
+     ```
+
+---
