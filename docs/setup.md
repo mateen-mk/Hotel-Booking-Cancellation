@@ -45,3 +45,24 @@ Ensure you have the following software installed on your system:
      ```
 
 ---
+
+## **4️⃣ Install Dependencies**
+
+Install the required Python libraries:
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## **5️⃣ Configure Environment Variables**
+
+1. Create a `.env` file in the project root directory.
+2. Add the necessary environment variables. For example:
+   ```
+   DATABASE_URL=your_database_url
+   ```
+3. These variables will be loaded into the project during runtime.
+
+---
+
