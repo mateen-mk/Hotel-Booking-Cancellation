@@ -1,4 +1,4 @@
-# src/data/data_split.py script is used to split the data into train, test, and validation sets.
+# src/data/data_split.py script is used to split the data into train and test sets.
 
 import os
 import sys
@@ -11,7 +11,7 @@ from src.core.entities.artifact_entity import (DataPreprocessingArtifact,
                                                DataSplitArtifact)
 
 from src.core.utils.data_utils import (read_data, save_data)
-from src.core.utils.train_test_split_utils import split_into_train_test_val
+from src.core.utils.train_test_split_utils import split_data
 
 from src.core.constants.common_constant import TEST_SET_SPLIT_RATIO
 
@@ -20,7 +20,7 @@ from src.core.constants.common_constant import TEST_SET_SPLIT_RATIO
 
 class DataSplit:
     """
-    Class for splitting the data into training, testing, and validation sets.
+    Class for splitting the data into training and testing sets.
     """
 
     def __init__(self, 
@@ -48,7 +48,7 @@ class DataSplit:
 
     def initiate_data_split(self) -> DataSplitArtifact:
         """
-        Split the data into train, test, and validation sets and save them to respective paths.
+        Split the data into train and test sets and save them to respective paths.
 
         Returns:
         - DataSplitArtifact
@@ -61,9 +61,9 @@ class DataSplit:
             data = read_data(data_path)
 
 
-            # Perform train-test-validation split using utility
-            logging.info("Performing train-test-validation split.")
-            train_data, test_data = split_into_train_test_val(data, TEST_SET_SPLIT_RATIO)
+            # Perform train-test split using utility
+            logging.info("Performing train-test split.")
+            train_data, test_data = split_data(data, TEST_SET_SPLIT_RATIO)
 
 
             # Logging the dataset sizes
